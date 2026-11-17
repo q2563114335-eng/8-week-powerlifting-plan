@@ -64,15 +64,18 @@
     .e1rm { padding:3px 7px; font-size:.86rem; font-variant-numeric:tabular-nums; }
     .unit,.calc-basis { font-size:.72rem; color:var(--muted); }
     .calc-basis { text-align:right; }
-    .calc-strip { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); grid-template-rows:repeat(2, minmax(0,1fr)); grid-column:1/-1; font-variant-numeric:tabular-nums; gap:5px; }
+    .calc-strip { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); grid-template-rows:auto auto; grid-column:1/-1; font-variant-numeric:tabular-nums; gap:5px; }
     .calc-strip > div { display:flex; align-items:center; justify-content:space-between; gap:4px; background:#eaf1ea; border:2px solid transparent; border-radius:7px; padding:4px 7px; }
     .calc-strip span { font-size:.72rem; color:var(--muted); display:block; }
     .calc-status-copy { display:grid; gap:2px; line-height:1.2; }
     .calc-strip .calc-rpe { font-size:.7rem; font-weight:650; white-space:nowrap; }
+    .calc-strip > .calc-support { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:3px 5px; }
+    .calc-formula { grid-column:1/-1; color:var(--muted); font-size:.68rem; line-height:1.25; }
     .calc-strip b { font-size:1rem; line-height:1.45; display:block; }
     .calc-strip .calc-top { grid-column:1; grid-row:1/span 2; display:grid; justify-content:center; align-content:center; text-align:center; min-height:82px; padding:8px; background:#14593e; color:#fff; box-shadow:0 2px 7px rgb(16 46 36 / 20%); }
     .calc-top span { color:#eff8ef; font-size:.84rem; font-weight:750; }
     .calc-top b { font-size:2rem; line-height:1.05; font-weight:800; }
+    .calc-top small { margin-top:4px; color:#eff8ef; font-size:.72rem; }
     .calc-strip .calc-top.at-floor { border-color:#f7d594; }
     table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; font-size:.84rem; }
     th,td { line-height:1.34; padding:7px 5px; border-bottom:1px solid #e5ebe6; }
@@ -173,7 +176,7 @@
   </div></div>
   <main class="wrap">
     <details class="guide"><summary>选重规则与记录设置</summary><div class="body">
-      <p>在每次训练中输入当日标准赛停 e1RM，赛停单次取按状态换算重量和比例下限中的较高值。下限按 212.5 kg × 当日最低比例并向上取整。留空显示预览重量。W8D4 首个评估单次按 200–205 kg 编排。</p>
+      <p>按状态用当日赛停 e1RM × 卡片上的百分比，再按重量步进就近取整。标有「参考 RPE」的训练日采用固定百分比。「最低」用 212.5 kg × 当日最低比例并向上取整。赛停计划取这两个结果中的较高值。留空显示预览重量。W8D4 首个评估单次按 200–205 kg 编排。</p>
       <p>常规 T&amp;G 以当日赛停 e1RM × 1.00 换算，无腿窄距采用 × 0.95。回组根据末组 RPE 校准，RPE 换算参考 <a href="https://fireyourcoach.co/tools/rpe-chart" rel="noreferrer">Fire Your Coach</a>。蹲拉按阶段基准给出建议重量。</p>
       <p>Top 明显偏难时停止追加单次，回组先降 2.5–5 kg 或少做 1–2 组。前一负荷周的蹲拉单次或末组超目标时，沿用最近一次达标周的基准。</p>
       <p>在 Safari 普通模式打开固定网址，可用浏览器自动保存。每次训练后点「存储到文件」，可保留一份含当前记录的 HTML。若从 iPhone「文件」打开后没有保存按钮，请改用 Safari 打开网页版本。</p>
@@ -198,9 +201,15 @@
         <input id="w1d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w1d1-e1rm" aria-describedby="w1d1-estimate">
         <output id="w1d1-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>170</b></div>
-          <div><span>最低 · 76.0%</span><b data-floor-kg>165</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>170</b>
+            <small class="calc-formula" data-status-formula>212.5 × 79.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>165</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -237,9 +246,15 @@
         <input id="w1d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w1d2-e1rm" aria-describedby="w1d2-estimate">
         <output id="w1d2-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
-          <div><span>最低 · 80.0%</span><b data-floor-kg>170</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
+            <small class="calc-formula" data-status-formula>212.5 × 82.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>170</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 80.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -284,9 +299,15 @@
         <input id="w1d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w1d3-e1rm" aria-describedby="w1d3-estimate">
         <output id="w1d3-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>160</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>160</b></div>
-          <div><span>最低 · 72.0%</span><b data-floor-kg>155</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>160</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>160</b>
+            <small class="calc-formula" data-status-formula>212.5 × 76.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>155</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 72.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -331,9 +352,15 @@
         <input id="w1d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w1d4-e1rm" aria-describedby="w1d4-estimate">
         <output id="w1d4-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b></div>
-          <div><span>最低 · 84.0%</span><b data-floor-kg>180</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b>
+            <small class="calc-formula" data-status-formula>212.5 × 89.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>180</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -410,9 +437,15 @@
         <input id="w2d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w2d1-e1rm" aria-describedby="w2d1-estimate">
         <output id="w2d1-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>185</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>185</b></div>
-          <div><span>最低 · 83.0%</span><b data-floor-kg>180</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>185</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>185</b>
+            <small class="calc-formula" data-status-formula>212.5 × 86.3% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>180</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 83.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -449,9 +482,15 @@
         <input id="w2d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w2d2-e1rm" aria-describedby="w2d2-estimate">
         <output id="w2d2-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>185</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>185</b></div>
-          <div><span>最低 · 85.0%</span><b data-floor-kg>185</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>185</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>185</b>
+            <small class="calc-formula" data-status-formula>212.5 × 87.8% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>185</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -496,9 +535,15 @@
         <input id="w2d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w2d3-e1rm" aria-describedby="w2d3-estimate">
         <output id="w2d3-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>165</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>165</b></div>
-          <div><span>最低 · 74.0%</span><b data-floor-kg>160</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>165</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>165</b>
+            <small class="calc-formula" data-status-formula>212.5 × 78.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>160</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 74.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -543,9 +588,15 @@
         <input id="w2d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w2d4-e1rm" aria-describedby="w2d4-estimate">
         <output id="w2d4-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>195</b></div>
-          <div><span>最低 · 87.5%</span><b data-floor-kg>190</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>195</b>
+            <small class="calc-formula" data-status-formula>212.5 × 90.7% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>190</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 87.5% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -622,9 +673,15 @@
         <input id="w3d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w3d1-e1rm" aria-describedby="w3d1-estimate">
         <output id="w3d1-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>190</b></div>
-          <div><span>最低 · 84.0%</span><b data-floor-kg>180</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>190</b>
+            <small class="calc-formula" data-status-formula>215 × 87.8% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>180</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -661,9 +718,15 @@
         <input id="w3d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w3d2-e1rm" aria-describedby="w3d2-estimate">
         <output id="w3d2-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b></div>
-          <div><span>最低 · 87.0%</span><b data-floor-kg>185</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b>
+            <small class="calc-formula" data-status-formula>215 × 89.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>185</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 87.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -708,9 +771,15 @@
         <input id="w3d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w3d3-e1rm" aria-describedby="w3d3-estimate">
         <output id="w3d3-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>170</b></div>
-          <div><span>最低 · 75.0%</span><b data-floor-kg>160</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>170</b>
+            <small class="calc-formula" data-status-formula>215 × 79.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>160</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 75.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -755,9 +824,15 @@
         <input id="w3d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w3d4-e1rm" aria-describedby="w3d4-estimate">
         <output id="w3d4-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>200</b></div>
-          <div><span>最低 · 89.0%</span><b data-floor-kg>190</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>200</b>
+            <small class="calc-formula" data-status-formula>215 × 92.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>190</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -834,9 +909,15 @@
         <input id="w4d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w4d1-e1rm" aria-describedby="w4d1-estimate">
         <output id="w4d1-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>165</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>165</b></div>
-          <div><span>最低 · 72.0%</span><b data-floor-kg>155</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>165</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>165</b>
+            <small class="calc-formula" data-status-formula>215 × 76.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>155</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 72.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -873,9 +954,15 @@
         <input id="w4d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w4d2-e1rm" aria-describedby="w4d2-estimate">
         <output id="w4d2-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
-          <div><span>最低 · 78.0%</span><b data-floor-kg>170</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
+            <small class="calc-formula" data-status-formula>215 × 82.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>170</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 78.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -920,9 +1007,15 @@
         <input id="w4d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w4d3-e1rm" aria-describedby="w4d3-estimate">
         <output id="w4d3-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>155</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>155</b></div>
-          <div><span>最低 · 70.0%</span><b data-floor-kg>150</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>155</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>155</b>
+            <small class="calc-formula" data-status-formula>215 × 73.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>150</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 70.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -967,9 +1060,15 @@
         <input id="w4d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w4d4-e1rm" aria-describedby="w4d4-estimate">
         <output id="w4d4-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b></div>
-          <div><span>最低 · 84.0%</span><b data-floor-kg>180</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b>
+            <small class="calc-formula" data-status-formula>215 × 89.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>180</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1046,9 +1145,15 @@
         <input id="w5d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="217.5" data-store="w5d1-e1rm" aria-describedby="w5d1-estimate">
         <output id="w5d1-estimate" class="calc-basis">预览基准 217.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>190</b></div>
-          <div><span>最低 · 85.0%</span><b data-floor-kg>185</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>190</b>
+            <small class="calc-formula" data-status-formula>217.5 × 87.8% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>185</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1085,9 +1190,15 @@
         <input id="w5d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="217.5" data-store="w5d2-e1rm" aria-describedby="w5d2-estimate">
         <output id="w5d2-estimate" class="calc-basis">预览基准 217.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>195</b></div>
-          <div><span>最低 · 89.0%</span><b data-floor-kg>190</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>195</b>
+            <small class="calc-formula" data-status-formula>217.5 × 89.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>190</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1132,9 +1243,15 @@
         <input id="w5d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="217.5" data-store="w5d3-e1rm" aria-describedby="w5d3-estimate">
         <output id="w5d3-estimate" class="calc-basis">预览基准 217.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
-          <div><span>最低 · 76.0%</span><b data-floor-kg>165</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
+            <small class="calc-formula" data-status-formula>217.5 × 80.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>165</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1179,9 +1296,15 @@
         <input id="w5d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="217.5" data-store="w5d4-e1rm" aria-describedby="w5d4-estimate">
         <output id="w5d4-estimate" class="calc-basis">预览基准 217.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>200</b></div>
-          <div><span>最低 · 92.0%</span><b data-floor-kg>200</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>200</b>
+            <small class="calc-formula" data-status-formula>217.5 × 92.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>200</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 92.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1258,9 +1381,15 @@
         <input id="w6d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="220" data-store="w6d1-e1rm" aria-describedby="w6d1-estimate">
         <output id="w6d1-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>195</b></div>
-          <div><span>最低 · 87.0%</span><b data-floor-kg>185</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>195</b>
+            <small class="calc-formula" data-status-formula>220 × 89.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>185</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 87.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1297,9 +1426,15 @@
         <input id="w6d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="220" data-store="w6d2-e1rm" aria-describedby="w6d2-estimate">
         <output id="w6d2-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>200</b></div>
-          <div><span>最低 · 91.0%</span><b data-floor-kg>195</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>200</b>
+            <small class="calc-formula" data-status-formula>220 × 90.7% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>195</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 91.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1344,9 +1479,15 @@
         <input id="w6d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="220" data-store="w6d3-e1rm" aria-describedby="w6d3-estimate">
         <output id="w6d3-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
-          <div><span>最低 · 76.0%</span><b data-floor-kg>165</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
+            <small class="calc-formula" data-status-formula>220 × 80.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>165</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1391,9 +1532,15 @@
         <input id="w6d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="220" data-store="w6d4-e1rm" aria-describedby="w6d4-estimate">
         <output id="w6d4-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>205</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>205</b></div>
-          <div><span>最低 · 94.0%</span><b data-floor-kg>200</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>205</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>205</b>
+            <small class="calc-formula" data-status-formula>220 × 92.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>200</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 94.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1470,9 +1617,15 @@
         <input id="w7d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w7d1-e1rm" aria-describedby="w7d1-estimate">
         <output id="w7d1-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>195</b></div>
-          <div><span>最低 · 85.0%</span><b data-floor-kg>185</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>195</b>
+            <small class="calc-formula" data-status-formula>222.5 × 87.8% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>185</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1509,9 +1662,15 @@
         <input id="w7d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w7d2-e1rm" aria-describedby="w7d2-estimate">
         <output id="w7d2-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>200</b></div>
-          <div><span>最低 · 89.0%</span><b data-floor-kg>190</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>200</b>
+            <small class="calc-formula" data-status-formula>222.5 × 89.2% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>190</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1556,9 +1715,15 @@
         <input id="w7d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w7d3-e1rm" aria-describedby="w7d3-estimate">
         <output id="w7d3-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>170</b></div>
-          <div><span>最低 · 73.5%</span><b data-floor-kg>160</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>170</b>
+            <small class="calc-formula" data-status-formula>222.5 × 77.5% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>160</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 73.5% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1603,9 +1768,15 @@
         <input id="w7d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w7d4-e1rm" aria-describedby="w7d4-estimate">
         <output id="w7d4-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>210</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8.5</span></div><b data-status-kg>210</b></div>
-          <div><span>最低 · 96.0%</span><b data-floor-kg>205</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>210</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8.5</span></div><b data-status-kg>210</b>
+            <small class="calc-formula" data-status-formula>222.5 × 93.9% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>205</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 96.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1682,9 +1853,15 @@
         <input id="w8d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w8d1-e1rm" aria-describedby="w8d1-estimate">
         <output id="w8d1-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>160</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>160</b></div>
-          <div><span>最低 · 68.0%</span><b data-floor-kg>145</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>160</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>160</b>
+            <small class="calc-formula" data-status-formula>222.5 × 73.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>145</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 68.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1721,9 +1898,15 @@
         <input id="w8d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w8d2-e1rm" aria-describedby="w8d2-estimate">
         <output id="w8d2-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
-          <div><span>最低 · 74.0%</span><b data-floor-kg>160</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
+            <small class="calc-formula" data-status-formula>222.5 × 79.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>160</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 74.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1768,9 +1951,15 @@
         <input id="w8d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w8d3-e1rm" aria-describedby="w8d3-estimate">
         <output id="w8d3-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>155</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>155</b></div>
-          <div><span>最低 · 66.0%</span><b data-floor-kg>145</b></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>155</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>155</b>
+            <small class="calc-formula" data-status-formula>222.5 × 70.0% · 就近取整</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>145</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 66.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -1831,9 +2020,15 @@
         <input id="w8d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w8d4-e1rm" aria-describedby="w8d4-estimate">
         <output id="w8d4-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>评估单次</span><b data-top-kg>205</b></div>
-          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">评估 RPE 8</span></div><b data-status-kg>205</b></div>
-          <div><span>最低 · 94.0%</span><b data-floor-kg>200</b></div>
+          <div class="calc-top"><span>评估单次</span><b data-top-kg>205</b><small>取右侧较高值</small></div>
+          <div class="calc-support">
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">评估 RPE 8</span></div><b data-status-kg>205</b>
+            <small class="calc-formula" data-status-formula>222.5 × 92.2% · 就近取整 · 上限 205</small>
+          </div>
+          <div class="calc-support">
+            <span>最低</span><b data-floor-kg>200</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 94.0% · 向上取整</small>
+          </div>
         </div>
       </div>
       <table class="prescription">
@@ -2007,8 +2202,10 @@
       const base = input.value === '' ? Number(session.dataset.preview) : input.valueAsNumber;
       const valid = !input.validity.badInput && Number.isFinite(base) && base > 0;
       const round = amount => Math.round(amount / step + 1e-9) * step;
-      const floorKg = Math.ceil(settings.base * Number(session.dataset.floor) / step - 1e-9) * step;
-      const assessed = round(base * Number(session.dataset.rate));
+      const floorRate = Number(session.dataset.floor);
+      const statusRate = Number(session.dataset.rate);
+      const floorKg = Math.ceil(settings.base * floorRate / step - 1e-9) * step;
+      const assessed = round(base * statusRate);
       const cap = session.dataset.assessmentCap;
       const byStatus = cap ? Math.min(Number(cap), assessed) : assessed;
       const top = Math.max(floorKg, byStatus);
@@ -2016,6 +2213,7 @@
       basis.textContent = !valid ? '请输入有效重量' : input.value === '' ? `预览基准 ${base} kg` : `采用 ${base} kg`;
       session.querySelector('[data-floor-kg]').textContent = floorKg;
       session.querySelector('[data-status-kg]').textContent = valid ? byStatus : '—';
+      session.querySelector('[data-status-formula]').textContent = valid ? `${base} × ${(100 * statusRate).toFixed(1)}% · 就近取整${cap ? ` · 上限 ${cap}` : ''}` : '—';
       session.querySelector('[data-top-kg]').textContent = valid ? top : '—';
       session.querySelector('.calc-top').classList.toggle('at-floor', valid && floorKg > byStatus);
 
