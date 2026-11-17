@@ -67,6 +67,8 @@
     .calc-strip { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); grid-template-rows:repeat(2, minmax(0,1fr)); grid-column:1/-1; font-variant-numeric:tabular-nums; gap:5px; }
     .calc-strip > div { display:flex; align-items:center; justify-content:space-between; gap:4px; background:#eaf1ea; border:2px solid transparent; border-radius:7px; padding:4px 7px; }
     .calc-strip span { font-size:.72rem; color:var(--muted); display:block; }
+    .calc-status-copy { display:grid; gap:2px; line-height:1.2; }
+    .calc-strip .calc-rpe { font-size:.7rem; font-weight:650; white-space:nowrap; }
     .calc-strip b { font-size:1rem; line-height:1.45; display:block; }
     .calc-strip .calc-top { grid-column:1; grid-row:1/span 2; display:grid; justify-content:center; align-content:center; text-align:center; min-height:82px; padding:8px; background:#14593e; color:#fff; box-shadow:0 2px 7px rgb(16 46 36 / 20%); }
     .calc-top span { color:#eff8ef; font-size:.84rem; font-weight:750; }
@@ -197,7 +199,7 @@
         <output id="w1d1-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b></div>
-          <div><span>按状态</span><b data-status-kg>170</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>170</b></div>
           <div><span>最低 · 76.0%</span><b data-floor-kg>165</b></div>
         </div>
       </div>
@@ -236,7 +238,7 @@
         <output id="w1d2-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><span>按状态</span><b data-status-kg>175</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
           <div><span>最低 · 80.0%</span><b data-floor-kg>170</b></div>
         </div>
       </div>
@@ -283,7 +285,7 @@
         <output id="w1d3-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>160</b></div>
-          <div><span>按状态</span><b data-status-kg>160</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>160</b></div>
           <div><span>最低 · 72.0%</span><b data-floor-kg>155</b></div>
         </div>
       </div>
@@ -330,7 +332,7 @@
         <output id="w1d4-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><span>按状态</span><b data-status-kg>190</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b></div>
           <div><span>最低 · 84.0%</span><b data-floor-kg>180</b></div>
         </div>
       </div>
@@ -409,7 +411,7 @@
         <output id="w2d1-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>185</b></div>
-          <div><span>按状态</span><b data-status-kg>185</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>185</b></div>
           <div><span>最低 · 83.0%</span><b data-floor-kg>180</b></div>
         </div>
       </div>
@@ -448,7 +450,7 @@
         <output id="w2d2-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>185</b></div>
-          <div><span>按状态</span><b data-status-kg>185</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>185</b></div>
           <div><span>最低 · 85.0%</span><b data-floor-kg>185</b></div>
         </div>
       </div>
@@ -495,7 +497,7 @@
         <output id="w2d3-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>165</b></div>
-          <div><span>按状态</span><b data-status-kg>165</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>165</b></div>
           <div><span>最低 · 74.0%</span><b data-floor-kg>160</b></div>
         </div>
       </div>
@@ -542,7 +544,7 @@
         <output id="w2d4-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b></div>
-          <div><span>按状态</span><b data-status-kg>195</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>195</b></div>
           <div><span>最低 · 87.5%</span><b data-floor-kg>190</b></div>
         </div>
       </div>
@@ -621,7 +623,7 @@
         <output id="w3d1-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><span>按状态</span><b data-status-kg>190</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>190</b></div>
           <div><span>最低 · 84.0%</span><b data-floor-kg>180</b></div>
         </div>
       </div>
@@ -660,7 +662,7 @@
         <output id="w3d2-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><span>按状态</span><b data-status-kg>190</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b></div>
           <div><span>最低 · 87.0%</span><b data-floor-kg>185</b></div>
         </div>
       </div>
@@ -707,7 +709,7 @@
         <output id="w3d3-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b></div>
-          <div><span>按状态</span><b data-status-kg>170</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>170</b></div>
           <div><span>最低 · 75.0%</span><b data-floor-kg>160</b></div>
         </div>
       </div>
@@ -754,7 +756,7 @@
         <output id="w3d4-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b></div>
-          <div><span>按状态</span><b data-status-kg>200</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>200</b></div>
           <div><span>最低 · 89.0%</span><b data-floor-kg>190</b></div>
         </div>
       </div>
@@ -833,7 +835,7 @@
         <output id="w4d1-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>165</b></div>
-          <div><span>按状态</span><b data-status-kg>165</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>165</b></div>
           <div><span>最低 · 72.0%</span><b data-floor-kg>155</b></div>
         </div>
       </div>
@@ -872,7 +874,7 @@
         <output id="w4d2-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><span>按状态</span><b data-status-kg>175</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
           <div><span>最低 · 78.0%</span><b data-floor-kg>170</b></div>
         </div>
       </div>
@@ -919,7 +921,7 @@
         <output id="w4d3-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>155</b></div>
-          <div><span>按状态</span><b data-status-kg>155</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>155</b></div>
           <div><span>最低 · 70.0%</span><b data-floor-kg>150</b></div>
         </div>
       </div>
@@ -966,7 +968,7 @@
         <output id="w4d4-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><span>按状态</span><b data-status-kg>190</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b></div>
           <div><span>最低 · 84.0%</span><b data-floor-kg>180</b></div>
         </div>
       </div>
@@ -1045,7 +1047,7 @@
         <output id="w5d1-estimate" class="calc-basis">预览基准 217.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b></div>
-          <div><span>按状态</span><b data-status-kg>190</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>190</b></div>
           <div><span>最低 · 85.0%</span><b data-floor-kg>185</b></div>
         </div>
       </div>
@@ -1084,7 +1086,7 @@
         <output id="w5d2-estimate" class="calc-basis">预览基准 217.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b></div>
-          <div><span>按状态</span><b data-status-kg>195</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>195</b></div>
           <div><span>最低 · 89.0%</span><b data-floor-kg>190</b></div>
         </div>
       </div>
@@ -1131,7 +1133,7 @@
         <output id="w5d3-estimate" class="calc-basis">预览基准 217.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><span>按状态</span><b data-status-kg>175</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
           <div><span>最低 · 76.0%</span><b data-floor-kg>165</b></div>
         </div>
       </div>
@@ -1178,7 +1180,7 @@
         <output id="w5d4-estimate" class="calc-basis">预览基准 217.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b></div>
-          <div><span>按状态</span><b data-status-kg>200</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>200</b></div>
           <div><span>最低 · 92.0%</span><b data-floor-kg>200</b></div>
         </div>
       </div>
@@ -1257,7 +1259,7 @@
         <output id="w6d1-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b></div>
-          <div><span>按状态</span><b data-status-kg>195</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>195</b></div>
           <div><span>最低 · 87.0%</span><b data-floor-kg>185</b></div>
         </div>
       </div>
@@ -1296,7 +1298,7 @@
         <output id="w6d2-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b></div>
-          <div><span>按状态</span><b data-status-kg>200</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>200</b></div>
           <div><span>最低 · 91.0%</span><b data-floor-kg>195</b></div>
         </div>
       </div>
@@ -1343,7 +1345,7 @@
         <output id="w6d3-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><span>按状态</span><b data-status-kg>175</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
           <div><span>最低 · 76.0%</span><b data-floor-kg>165</b></div>
         </div>
       </div>
@@ -1390,7 +1392,7 @@
         <output id="w6d4-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>205</b></div>
-          <div><span>按状态</span><b data-status-kg>205</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>205</b></div>
           <div><span>最低 · 94.0%</span><b data-floor-kg>200</b></div>
         </div>
       </div>
@@ -1469,7 +1471,7 @@
         <output id="w7d1-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b></div>
-          <div><span>按状态</span><b data-status-kg>195</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>195</b></div>
           <div><span>最低 · 85.0%</span><b data-floor-kg>185</b></div>
         </div>
       </div>
@@ -1508,7 +1510,7 @@
         <output id="w7d2-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b></div>
-          <div><span>按状态</span><b data-status-kg>200</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>200</b></div>
           <div><span>最低 · 89.0%</span><b data-floor-kg>190</b></div>
         </div>
       </div>
@@ -1555,7 +1557,7 @@
         <output id="w7d3-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b></div>
-          <div><span>按状态</span><b data-status-kg>170</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>170</b></div>
           <div><span>最低 · 73.5%</span><b data-floor-kg>160</b></div>
         </div>
       </div>
@@ -1602,7 +1604,7 @@
         <output id="w7d4-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>210</b></div>
-          <div><span>按状态</span><b data-status-kg>210</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8.5</span></div><b data-status-kg>210</b></div>
           <div><span>最低 · 96.0%</span><b data-floor-kg>205</b></div>
         </div>
       </div>
@@ -1681,7 +1683,7 @@
         <output id="w8d1-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>160</b></div>
-          <div><span>按状态</span><b data-status-kg>160</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>160</b></div>
           <div><span>最低 · 68.0%</span><b data-floor-kg>145</b></div>
         </div>
       </div>
@@ -1720,7 +1722,7 @@
         <output id="w8d2-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b></div>
-          <div><span>按状态</span><b data-status-kg>175</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>175</b></div>
           <div><span>最低 · 74.0%</span><b data-floor-kg>160</b></div>
         </div>
       </div>
@@ -1767,7 +1769,7 @@
         <output id="w8d3-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>155</b></div>
-          <div><span>按状态</span><b data-status-kg>155</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>155</b></div>
           <div><span>最低 · 66.0%</span><b data-floor-kg>145</b></div>
         </div>
       </div>
@@ -1830,7 +1832,7 @@
         <output id="w8d4-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
           <div class="calc-top"><span>评估单次</span><b data-top-kg>205</b></div>
-          <div><span>按状态</span><b data-status-kg>205</b></div>
+          <div><div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">评估 RPE 8</span></div><b data-status-kg>205</b></div>
           <div><span>最低 · 94.0%</span><b data-floor-kg>200</b></div>
         </div>
       </div>
