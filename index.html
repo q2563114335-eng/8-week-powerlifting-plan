@@ -12,7 +12,7 @@
     body { margin:0; color:var(--ink); background:var(--paper); font-family:Inter,"Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif; font-size:15px; line-height:1.58; }
     h1,h2,h3,p,dl,dd { margin:0; }
     a { color:var(--green); }
-    button,input,select,textarea { font:inherit; }
+    button,input,textarea { font:inherit; }
     :focus-visible { outline:3px solid #307b57; outline-offset:3px; }
     .wrap { width:min(1180px, calc(100% - 64px)); margin-inline:auto; }
     .hero { background:var(--forest); color:#eff8ef; padding:35px 0 32px; border-bottom:4px solid #81b58b; }
@@ -35,10 +35,7 @@
     main { padding-block:24px 54px; }
     .guide { background:#f9fbf8; border:1px solid var(--line); border-radius:11px; margin-bottom:22px; }
     .guide summary { padding:11px 18px; }
-    .guide .body { display:grid; grid-template-columns:1fr auto; gap:11px 24px; padding:0 18px 16px; color:var(--muted); font-size:.89rem; }
-    .guide p { grid-column:1; }
-    .guide label { grid-column:2; grid-row:1/span 2; align-self:start; color:var(--ink); font-weight:650; }
-    select { margin-left:5px; border:1px solid #c1d2c7; background:#fff; color:var(--ink); border-radius:7px; padding:5px 8px; }
+    .guide .body { display:grid; gap:11px; padding:0 18px 16px; color:var(--muted); font-size:.89rem; }
     .week-list { display:grid; gap:24px; }
     .week-card { scroll-margin-top:76px; border:1px solid #cfddd3; background:var(--card); border-radius:15px; box-shadow:var(--shadow); overflow:hidden; }
     .week-head { display:grid; grid-template-columns:1fr 1.05fr; gap:16px 28px; align-items:end; padding:18px 25px; background:#eaf2e9; border-bottom:1px solid #d6e4d8; }
@@ -127,8 +124,6 @@
       .session { padding:15px 14px; }
       .session:nth-child(even) { border-left:0; }
       .session+.session { border-top:1px solid var(--line); }
-      .guide .body { grid-template-columns:1fr; }
-      .guide label { grid-column:1; grid-row:auto; }
       .prescription .load { white-space:normal; overflow-wrap:anywhere; }
       .col-sets { width:13%; }
       .col-intensity { width:13%; }
@@ -175,12 +170,11 @@
     <div class="save-tools"><span id="save-status" role="status"></span><button type="button" id="save-file" hidden>存储到文件</button></div>
   </div></div>
   <main class="wrap">
-    <details class="guide"><summary>选重规则与记录设置</summary><div class="body">
-      <p>按状态用当日赛停 e1RM × 卡片上的百分比，再按重量步进就近取整。标有「参考 RPE」的训练日采用固定百分比。「最低」用 212.5 kg × 当日最低比例并向上取整。赛停计划取这两个结果中的较高值。留空显示预览重量。W8D4 首个评估单次按 200–205 kg 编排。</p>
+    <details class="guide"><summary>选重与记录规则</summary><div class="body">
+      <p>计划重量统一取最近的 2.5 kg。「按状态」用当日赛停 e1RM × 卡片上的百分比。「最低」用 212.5 kg × 当日最低比例。两者就近取整后，赛停计划取较高值。标有「参考 RPE」的训练日采用固定百分比。留空显示预览重量。W8D4 首个评估单次按 200–205 kg 编排。</p>
       <p>常规 T&amp;G 以当日赛停 e1RM × 1.00 换算，无腿窄距采用 × 0.95。回组根据末组 RPE 校准，RPE 换算参考 <a href="https://fireyourcoach.co/tools/rpe-chart" rel="noreferrer">Fire Your Coach</a>。蹲拉按阶段基准给出建议重量。</p>
       <p>Top 明显偏难时停止追加单次，回组先降 2.5–5 kg 或少做 1–2 组。前一负荷周的蹲拉单次或末组超目标时，沿用最近一次达标周的基准。</p>
       <p>在 Safari 普通模式打开固定网址，可用浏览器自动保存。每次训练后点「存储到文件」，可保留一份含当前记录的 HTML。若从 iPhone「文件」打开后没有保存按钮，请改用 Safari 打开网页版本。</p>
-      <label for="bench-step">卧推重量步进<select id="bench-step" data-store="bench-step"><option value="5">5 kg</option><option value="2.5">2.5 kg</option></select></label>
     </div></details>
     <noscript><p>当前为静态预览。请用支持 JavaScript 的浏览器打开，以自动计算重量和保存记录。</p></noscript>
     <div class="week-list">
@@ -201,14 +195,14 @@
         <input id="w1d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w1d1-e1rm" aria-describedby="w1d1-estimate">
         <output id="w1d1-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>167.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>170</b>
-            <small class="calc-formula" data-status-formula>212.5 × 79.0% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>167.5</b>
+            <small class="calc-formula" data-status-formula>212.5 × 79.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>165</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>162.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -217,7 +211,7 @@
         <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">深蹲 · 容量</th><td class="sets">3×5</td><td class="intensity">@6 <small>76.2%</small></td><td class="load">127.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d1-0-kg" aria-label="深蹲 · 容量 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d1-0-rpe" aria-label="深蹲 · 容量 实际 RPE" value=""></td></tr>
-<tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">79.0%</td><td class="load" data-load="top" data-rate="0.79">170</td>
+<tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">79.0%</td><td class="load" data-load="top" data-rate="0.79">167.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d1-1-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d1-1-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
 <tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">2×8</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.696">140</td>
@@ -249,11 +243,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
-            <small class="calc-formula" data-status-formula>212.5 × 82.0% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>212.5 × 82.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>170</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 80.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 80.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -262,7 +256,7 @@
         <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">82.0%</td><td class="load" data-load="top" data-rate="0.82">175</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d2-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d2-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">3×5</td><td class="intensity">@6</td><td class="load" data-load="tng" data-rate="0.762">160</td>
+<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">3×5</td><td class="intensity">@6</td><td class="load" data-load="tng" data-rate="0.762">162.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d2-1-kg" aria-label="常规 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d2-1-rpe" aria-label="常规 T&amp;G · 回组 实际 RPE" value=""></td></tr>
 <tr><th scope="row">负重双杠臂屈伸</th><td class="sets">2×8</td><td class="intensity">@6</td><td class="load">+40–50 kg</td>
@@ -299,14 +293,14 @@
         <input id="w1d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w1d3-e1rm" aria-describedby="w1d3-estimate">
         <output id="w1d3-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>160</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>162.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>160</b>
-            <small class="calc-formula" data-status-formula>212.5 × 76.0% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>162.5</b>
+            <small class="calc-formula" data-status-formula>212.5 × 76.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>155</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 72.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>152.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 72.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -318,7 +312,7 @@
 <tr><th scope="row">深蹲 · 回组</th><td class="sets">3×4</td><td class="intensity">@6 <small>78.6%</small></td><td class="load">132.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d3-1-kg" aria-label="深蹲 · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d3-1-rpe" aria-label="深蹲 · 回组 实际 RPE" value=""></td></tr>
-<tr><th scope="row">赛推 · 技术单次</th><td class="sets">2×1</td><td class="intensity">76.0%</td><td class="load" data-load="top" data-rate="0.76">160</td>
+<tr><th scope="row">赛推 · 技术单次</th><td class="sets">2×1</td><td class="intensity">76.0%</td><td class="load" data-load="top" data-rate="0.76">162.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d3-2-kg" aria-label="赛推 · 技术单次 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w1d3-2-rpe" aria-label="赛推 · 技术单次 实际 RPE" value=""></td></tr>
 <tr><th scope="row">硬拉 · Top</th><td class="sets">1×1</td><td class="intensity">@6.5 <small>87.8%</small></td><td class="load">157.5</td>
@@ -355,11 +349,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b>
-            <small class="calc-formula" data-status-formula>212.5 × 89.2% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>212.5 × 89.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>180</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>177.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -437,14 +431,14 @@
         <input id="w2d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w2d1-e1rm" aria-describedby="w2d1-estimate">
         <output id="w2d1-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>185</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>182.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>185</b>
-            <small class="calc-formula" data-status-formula>212.5 × 86.3% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6</span></div><b data-status-kg>182.5</b>
+            <small class="calc-formula" data-status-formula>212.5 × 86.3% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>180</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 83.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>177.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 83.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -453,10 +447,10 @@
         <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">深蹲 · 容量</th><td class="sets">4×5</td><td class="intensity">@6.5 <small>77.4%</small></td><td class="load">130</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d1-0-kg" aria-label="深蹲 · 容量 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d1-0-rpe" aria-label="深蹲 · 容量 实际 RPE" value=""></td></tr>
-<tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@6</td><td class="load" data-load="top" data-rate="0.863">185</td>
+<tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@6</td><td class="load" data-load="top" data-rate="0.863">182.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d1-1-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d1-1-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">3×10</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.6559999999999999">130</td>
+<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">3×10</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.6559999999999999">132.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d1-2-kg" aria-label="无腿窄距 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d1-2-rpe" aria-label="无腿窄距 T&amp;G · 回组 实际 RPE" value=""></td></tr></tbody>
       </table>
@@ -482,20 +476,20 @@
         <input id="w2d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w2d2-e1rm" aria-describedby="w2d2-estimate">
         <output id="w2d2-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>185</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>187.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>185</b>
-            <small class="calc-formula" data-status-formula>212.5 × 87.8% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>187.5</b>
+            <small class="calc-formula" data-status-formula>212.5 × 87.8% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>185</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>180</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
       <table class="prescription">
         <colgroup><col><col class="col-sets"><col class="col-intensity"><col class="col-load"><col class="col-actual-weight"><col class="col-actual-rpe"></colgroup>
-        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@6.5</td><td class="load" data-load="top" data-rate="0.878">185</td>
+        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@6.5</td><td class="load" data-load="top" data-rate="0.878">187.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d2-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d2-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
 <tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">4×5</td><td class="intensity">@6.5</td><td class="load" data-load="tng" data-rate="0.774">165</td>
@@ -538,11 +532,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>165</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>165</b>
-            <small class="calc-formula" data-status-formula>212.5 × 78.0% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>212.5 × 78.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>160</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 74.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>157.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 74.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -588,23 +582,23 @@
         <input id="w2d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="212.5" data-store="w2d4-e1rm" aria-describedby="w2d4-estimate">
         <output id="w2d4-estimate" class="calc-basis">预览基准 212.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>192.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>195</b>
-            <small class="calc-formula" data-status-formula>212.5 × 90.7% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>192.5</b>
+            <small class="calc-formula" data-status-formula>212.5 × 90.7% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>190</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 87.5% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>185</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 87.5% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
       <table class="prescription">
         <colgroup><col><col class="col-sets"><col class="col-intensity"><col class="col-load"><col class="col-actual-weight"><col class="col-actual-rpe"></colgroup>
-        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7.5</td><td class="load" data-load="top" data-rate="0.907">195</td>
+        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7.5</td><td class="load" data-load="top" data-rate="0.907">192.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d4-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d4-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">4×5</td><td class="intensity">@7</td><td class="load" data-load="tng" data-rate="0.7859999999999999">165</td>
+<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">4×5</td><td class="intensity">@7</td><td class="load" data-load="tng" data-rate="0.7859999999999999">167.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d4-1-kg" aria-label="常规 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w2d4-1-rpe" aria-label="常规 T&amp;G · 回组 实际 RPE" value=""></td></tr>
 <tr><th scope="row">固定器械平板推胸</th><td class="sets">2×8–10</td><td class="intensity">@7</td><td class="load"><span class="unloaded">按 RPE</span></td>
@@ -676,11 +670,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>190</b>
-            <small class="calc-formula" data-status-formula>215 × 87.8% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>215 × 87.8% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>180</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>177.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -692,7 +686,7 @@
 <tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@6.5</td><td class="load" data-load="top" data-rate="0.878">190</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w3d1-1-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w3d1-1-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">3×10</td><td class="intensity">@7</td><td class="load" data-load="close" data-rate="0.6759999999999999">140</td>
+<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">3×10</td><td class="intensity">@7</td><td class="load" data-load="close" data-rate="0.6759999999999999">137.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w3d1-2-kg" aria-label="无腿窄距 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w3d1-2-rpe" aria-label="无腿窄距 T&amp;G · 回组 实际 RPE" value=""></td></tr></tbody>
       </table>
@@ -718,20 +712,20 @@
         <input id="w3d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w3d2-e1rm" aria-describedby="w3d2-estimate">
         <output id="w3d2-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>192.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b>
-            <small class="calc-formula" data-status-formula>215 × 89.2% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>192.5</b>
+            <small class="calc-formula" data-status-formula>215 × 89.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>185</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 87.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 87.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
       <table class="prescription">
         <colgroup><col><col class="col-sets"><col class="col-intensity"><col class="col-load"><col class="col-actual-weight"><col class="col-actual-rpe"></colgroup>
-        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7</td><td class="load" data-load="top" data-rate="0.892">190</td>
+        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7</td><td class="load" data-load="top" data-rate="0.892">192.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w3d2-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w3d2-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
 <tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">4×5</td><td class="intensity">@7</td><td class="load" data-load="tng" data-rate="0.7859999999999999">170</td>
@@ -774,11 +768,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>170</b>
-            <small class="calc-formula" data-status-formula>215 × 79.0% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>215 × 79.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>160</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 75.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 75.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -824,20 +818,20 @@
         <input id="w3d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w3d4-e1rm" aria-describedby="w3d4-estimate">
         <output id="w3d4-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>197.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>200</b>
-            <small class="calc-formula" data-status-formula>215 × 92.2% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>197.5</b>
+            <small class="calc-formula" data-status-formula>215 × 92.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>190</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
       <table class="prescription">
         <colgroup><col><col class="col-sets"><col class="col-intensity"><col class="col-load"><col class="col-actual-weight"><col class="col-actual-rpe"></colgroup>
-        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@8</td><td class="load" data-load="top" data-rate="0.922">200</td>
+        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@8</td><td class="load" data-load="top" data-rate="0.922">197.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w3d4-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w3d4-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
 <tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">4×5</td><td class="intensity">@7</td><td class="load" data-load="tng" data-rate="0.7859999999999999">170</td>
@@ -909,14 +903,14 @@
         <input id="w4d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w4d1-e1rm" aria-describedby="w4d1-estimate">
         <output id="w4d1-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>165</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>162.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>165</b>
-            <small class="calc-formula" data-status-formula>215 × 76.0% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>162.5</b>
+            <small class="calc-formula" data-status-formula>215 × 76.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>155</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 72.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>152.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 72.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -925,10 +919,10 @@
         <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">深蹲 · 容量</th><td class="sets">3×4</td><td class="intensity">@6 <small>72.0%</small></td><td class="load">120</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d1-0-kg" aria-label="深蹲 · 容量 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d1-0-rpe" aria-label="深蹲 · 容量 实际 RPE" value=""></td></tr>
-<tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">76.0%</td><td class="load" data-load="top" data-rate="0.76">165</td>
+<tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">76.0%</td><td class="load" data-load="top" data-rate="0.76">162.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d1-1-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d1-1-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">2×8</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.696">140</td>
+<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">2×8</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.696">142.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d1-2-kg" aria-label="无腿窄距 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d1-2-rpe" aria-label="无腿窄距 T&amp;G · 回组 实际 RPE" value=""></td></tr></tbody>
       </table>
@@ -954,20 +948,20 @@
         <input id="w4d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w4d2-e1rm" aria-describedby="w4d2-estimate">
         <output id="w4d2-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>177.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
-            <small class="calc-formula" data-status-formula>215 × 82.0% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>177.5</b>
+            <small class="calc-formula" data-status-formula>215 × 82.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>170</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 78.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>165</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 78.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
       <table class="prescription">
         <colgroup><col><col class="col-sets"><col class="col-intensity"><col class="col-load"><col class="col-actual-weight"><col class="col-actual-rpe"></colgroup>
-        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">82.0%</td><td class="load" data-load="top" data-rate="0.82">175</td>
+        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">82.0%</td><td class="load" data-load="top" data-rate="0.82">177.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d2-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d2-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
 <tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">2×5</td><td class="intensity">@6</td><td class="load" data-load="tng" data-rate="0.762">165</td>
@@ -1007,14 +1001,14 @@
         <input id="w4d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w4d3-e1rm" aria-describedby="w4d3-estimate">
         <output id="w4d3-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>155</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>157.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>155</b>
-            <small class="calc-formula" data-status-formula>215 × 73.0% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>157.5</b>
+            <small class="calc-formula" data-status-formula>215 × 73.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>150</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 70.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 70.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1026,7 +1020,7 @@
 <tr><th scope="row">深蹲 · 回组</th><td class="sets">2×3</td><td class="intensity">@6 <small>74.0%</small></td><td class="load">125</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d3-1-kg" aria-label="深蹲 · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d3-1-rpe" aria-label="深蹲 · 回组 实际 RPE" value=""></td></tr>
-<tr><th scope="row">赛推 · 技术单次</th><td class="sets">2×1</td><td class="intensity">73.0%</td><td class="load" data-load="top" data-rate="0.73">155</td>
+<tr><th scope="row">赛推 · 技术单次</th><td class="sets">2×1</td><td class="intensity">73.0%</td><td class="load" data-load="top" data-rate="0.73">157.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d3-2-kg" aria-label="赛推 · 技术单次 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d3-2-rpe" aria-label="赛推 · 技术单次 实际 RPE" value=""></td></tr>
 <tr><th scope="row">硬拉 · Top</th><td class="sets">1×1</td><td class="intensity">@6 <small>82.0%</small></td><td class="load">145</td>
@@ -1060,20 +1054,20 @@
         <input id="w4d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="215" data-store="w4d4-e1rm" aria-describedby="w4d4-estimate">
         <output id="w4d4-estimate" class="calc-basis">预览基准 215 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>192.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>190</b>
-            <small class="calc-formula" data-status-formula>215 × 89.2% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>192.5</b>
+            <small class="calc-formula" data-status-formula>215 × 89.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>180</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>177.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 84.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
       <table class="prescription">
         <colgroup><col><col class="col-sets"><col class="col-intensity"><col class="col-load"><col class="col-actual-weight"><col class="col-actual-rpe"></colgroup>
-        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7</td><td class="load" data-load="top" data-rate="0.892">190</td>
+        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7</td><td class="load" data-load="top" data-rate="0.892">192.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d4-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w4d4-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
 <tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">2×5</td><td class="intensity">@6</td><td class="load" data-load="tng" data-rate="0.762">165</td>
@@ -1148,11 +1142,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>190</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>190</b>
-            <small class="calc-formula" data-status-formula>217.5 × 87.8% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>217.5 × 87.8% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>185</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>180</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1164,7 +1158,7 @@
 <tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@6.5</td><td class="load" data-load="top" data-rate="0.878">190</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w5d1-1-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w5d1-1-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">3×8</td><td class="intensity">@7</td><td class="load" data-load="close" data-rate="0.7170000000000001">150</td>
+<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">3×8</td><td class="intensity">@7</td><td class="load" data-load="close" data-rate="0.7170000000000001">147.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w5d1-2-kg" aria-label="无腿窄距 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w5d1-2-rpe" aria-label="无腿窄距 T&amp;G · 回组 实际 RPE" value=""></td></tr></tbody>
       </table>
@@ -1193,11 +1187,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>195</b>
-            <small class="calc-formula" data-status-formula>217.5 × 89.2% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>217.5 × 89.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>190</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1206,7 +1200,7 @@
         <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7</td><td class="load" data-load="top" data-rate="0.892">195</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w5d2-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w5d2-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">4×4</td><td class="intensity">@7</td><td class="load" data-load="tng" data-rate="0.8109999999999999">175</td>
+<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">4×4</td><td class="intensity">@7</td><td class="load" data-load="tng" data-rate="0.8109999999999999">177.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w5d2-1-kg" aria-label="常规 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w5d2-1-rpe" aria-label="常规 T&amp;G · 回组 实际 RPE" value=""></td></tr>
 <tr><th scope="row">负重双杠臂屈伸</th><td class="sets">3×6</td><td class="intensity">@7</td><td class="load">+60–70 kg</td>
@@ -1246,11 +1240,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
-            <small class="calc-formula" data-status-formula>217.5 × 80.0% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>217.5 × 80.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>165</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>162.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1299,11 +1293,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>200</b>
-            <small class="calc-formula" data-status-formula>217.5 × 92.2% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>217.5 × 92.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>200</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 92.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>195</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 92.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1384,11 +1378,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>195</b>
-            <small class="calc-formula" data-status-formula>220 × 89.2% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>220 × 89.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>185</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 87.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 87.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1429,11 +1423,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7.5</span></div><b data-status-kg>200</b>
-            <small class="calc-formula" data-status-formula>220 × 90.7% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>220 × 90.7% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>195</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 91.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>192.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 91.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1442,7 +1436,7 @@
         <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7.5</td><td class="load" data-load="top" data-rate="0.907">200</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w6d2-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w6d2-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">3×4</td><td class="intensity">@7.5</td><td class="load" data-load="tng" data-rate="0.8240000000000001">180</td>
+<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">3×4</td><td class="intensity">@7.5</td><td class="load" data-load="tng" data-rate="0.8240000000000001">182.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w6d2-1-kg" aria-label="常规 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w6d2-1-rpe" aria-label="常规 T&amp;G · 回组 实际 RPE" value=""></td></tr>
 <tr><th scope="row">负重双杠臂屈伸</th><td class="sets">2×6</td><td class="intensity">@7.5</td><td class="load">+65–75 kg</td>
@@ -1482,11 +1476,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
-            <small class="calc-formula" data-status-formula>220 × 80.0% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>220 × 80.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>165</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>162.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 76.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1532,23 +1526,23 @@
         <input id="w6d4-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="220" data-store="w6d4-e1rm" aria-describedby="w6d4-estimate">
         <output id="w6d4-estimate" class="calc-basis">预览基准 220 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>205</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>202.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>205</b>
-            <small class="calc-formula" data-status-formula>220 × 92.2% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8</span></div><b data-status-kg>202.5</b>
+            <small class="calc-formula" data-status-formula>220 × 92.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>200</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 94.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 94.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
       <table class="prescription">
         <colgroup><col><col class="col-sets"><col class="col-intensity"><col class="col-load"><col class="col-actual-weight"><col class="col-actual-rpe"></colgroup>
-        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@8</td><td class="load" data-load="top" data-rate="0.922">205</td>
+        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@8</td><td class="load" data-load="top" data-rate="0.922">202.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w6d4-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w6d4-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">3×3</td><td class="intensity">@7.5</td><td class="load" data-load="tng" data-rate="0.85">185</td>
+<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">3×3</td><td class="intensity">@7.5</td><td class="load" data-load="tng" data-rate="0.85">187.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w6d4-1-kg" aria-label="常规 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w6d4-1-rpe" aria-label="常规 T&amp;G · 回组 实际 RPE" value=""></td></tr>
 <tr><th scope="row">固定器械平板推胸</th><td class="sets">1×8–10</td><td class="intensity">@7</td><td class="load"><span class="unloaded">按 RPE</span></td>
@@ -1620,11 +1614,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>195</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 6.5</span></div><b data-status-kg>195</b>
-            <small class="calc-formula" data-status-formula>222.5 × 87.8% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>222.5 × 87.8% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>185</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>180</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 85.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1636,7 +1630,7 @@
 <tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@6.5</td><td class="load" data-load="top" data-rate="0.878">195</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d1-1-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d1-1-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">2×8</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.696">145</td>
+<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">2×8</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.696">147.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d1-2-kg" aria-label="无腿窄距 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d1-2-rpe" aria-label="无腿窄距 T&amp;G · 回组 实际 RPE" value=""></td></tr></tbody>
       </table>
@@ -1662,23 +1656,23 @@
         <input id="w7d2-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w7d2-e1rm" aria-describedby="w7d2-estimate">
         <output id="w7d2-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>200</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>197.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>200</b>
-            <small class="calc-formula" data-status-formula>222.5 × 89.2% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 7</span></div><b data-status-kg>197.5</b>
+            <small class="calc-formula" data-status-formula>222.5 × 89.2% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>190</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 89.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
       <table class="prescription">
         <colgroup><col><col class="col-sets"><col class="col-intensity"><col class="col-load"><col class="col-actual-weight"><col class="col-actual-rpe"></colgroup>
-        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7</td><td class="load" data-load="top" data-rate="0.892">200</td>
+        <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">@7</td><td class="load" data-load="top" data-rate="0.892">197.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d2-0-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d2-0-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">2×3</td><td class="intensity">@6.5</td><td class="load" data-load="tng" data-rate="0.8240000000000001">185</td>
+<tr><th scope="row">常规 T&amp;G · 回组</th><td class="sets">2×3</td><td class="intensity">@6.5</td><td class="load" data-load="tng" data-rate="0.8240000000000001">182.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d2-1-kg" aria-label="常规 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d2-1-rpe" aria-label="常规 T&amp;G · 回组 实际 RPE" value=""></td></tr>
 <tr><th scope="row">负重双杠臂屈伸</th><td class="sets">2×6</td><td class="intensity">@6</td><td class="load">+40–55 kg</td>
@@ -1715,14 +1709,14 @@
         <input id="w7d3-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w7d3-e1rm" aria-describedby="w7d3-estimate">
         <output id="w7d3-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>170</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>172.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>170</b>
-            <small class="calc-formula" data-status-formula>222.5 × 77.5% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>172.5</b>
+            <small class="calc-formula" data-status-formula>222.5 × 77.5% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>160</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 73.5% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>155</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 73.5% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1734,7 +1728,7 @@
 <tr><th scope="row">深蹲 · 回组</th><td class="sets">2×2</td><td class="intensity">@7 <small>86.3%</small></td><td class="load">152.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d3-1-kg" aria-label="深蹲 · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d3-1-rpe" aria-label="深蹲 · 回组 实际 RPE" value=""></td></tr>
-<tr><th scope="row">赛推 · 技术单次</th><td class="sets">1×1</td><td class="intensity">77.5%</td><td class="load" data-load="top" data-rate="0.775">170</td>
+<tr><th scope="row">赛推 · 技术单次</th><td class="sets">1×1</td><td class="intensity">77.5%</td><td class="load" data-load="top" data-rate="0.775">172.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d3-2-kg" aria-label="赛推 · 技术单次 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w7d3-2-rpe" aria-label="赛推 · 技术单次 实际 RPE" value=""></td></tr>
 <tr><th scope="row">硬拉 · Top</th><td class="sets">1×1</td><td class="intensity">@8.5 <small>93.9%</small></td><td class="load">177.5</td>
@@ -1771,11 +1765,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>210</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">Top RPE 8.5</span></div><b data-status-kg>210</b>
-            <small class="calc-formula" data-status-formula>222.5 × 93.9% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>222.5 × 93.9% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>205</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 96.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 96.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1853,14 +1847,14 @@
         <input id="w8d1-e1rm" class="e1rm" type="number" inputmode="decimal" step="any" min="1" value="" placeholder="222.5" data-store="w8d1-e1rm" aria-describedby="w8d1-estimate">
         <output id="w8d1-estimate" class="calc-basis">预览基准 222.5 kg</output>
         <div class="calc-strip" aria-label="赛停建议重量">
-          <div class="calc-top"><span>赛停计划</span><b data-top-kg>160</b><small>取右侧较高值</small></div>
+          <div class="calc-top"><span>赛停计划</span><b data-top-kg>162.5</b><small>取右侧较高值</small></div>
           <div class="calc-support">
-            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>160</b>
-            <small class="calc-formula" data-status-formula>222.5 × 73.0% · 就近取整</small>
+            <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>162.5</b>
+            <small class="calc-formula" data-status-formula>222.5 × 73.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>145</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 68.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 68.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1869,10 +1863,10 @@
         <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">强度</th><th scope="col">kg</th><th class="actual-head" scope="col">实际重量</th><th class="actual-head" scope="col">实际 RPE</th></tr></thead><tbody><tr><th scope="row">深蹲 · 技术</th><td class="sets">2×2</td><td class="intensity">@6 <small>60.0%</small></td><td class="load">107.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w8d1-0-kg" aria-label="深蹲 · 技术 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w8d1-0-rpe" aria-label="深蹲 · 技术 实际 RPE" value=""></td></tr>
-<tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">73.0%</td><td class="load" data-load="top" data-rate="0.73">160</td>
+<tr><th scope="row">赛推 · Top</th><td class="sets">1×1</td><td class="intensity">73.0%</td><td class="load" data-load="top" data-rate="0.73">162.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w8d1-1-kg" aria-label="赛推 · Top 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w8d1-1-rpe" aria-label="赛推 · Top 实际 RPE" value=""></td></tr>
-<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">1×8</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.58">125</td>
+<tr><th scope="row">无腿窄距 T&amp;G · 回组</th><td class="sets">1×8</td><td class="intensity">@6</td><td class="load" data-load="close" data-rate="0.58">122.5</td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w8d1-2-kg" aria-label="无腿窄距 T&amp;G · 回组 实际重量" value=""></td>
       <td class="actual-cell"><input type="text" inputmode="decimal" autocomplete="off" data-store="w8d1-2-rpe" aria-label="无腿窄距 T&amp;G · 回组 实际 RPE" value=""></td></tr></tbody>
       </table>
@@ -1901,11 +1895,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>175</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>175</b>
-            <small class="calc-formula" data-status-formula>222.5 × 79.0% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>222.5 × 79.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>160</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 74.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>157.5</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 74.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -1954,11 +1948,11 @@
           <div class="calc-top"><span>赛停计划</span><b data-top-kg>155</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">参考 RPE 6</span></div><b data-status-kg>155</b>
-            <small class="calc-formula" data-status-formula>222.5 × 70.0% · 就近取整</small>
+            <small class="calc-formula" data-status-formula>222.5 × 70.0% · 取最近 2.5 kg</small>
           </div>
           <div class="calc-support">
-            <span>最低</span><b data-floor-kg>145</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 66.0% · 向上取整</small>
+            <span>最低</span><b data-floor-kg>140</b>
+            <small class="calc-formula" data-floor-formula>212.5 × 66.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -2023,11 +2017,11 @@
           <div class="calc-top"><span>评估单次</span><b data-top-kg>205</b><small>取右侧较高值</small></div>
           <div class="calc-support">
             <div class="calc-status-copy"><span>按状态</span><span class="calc-rpe">评估 RPE 8</span></div><b data-status-kg>205</b>
-            <small class="calc-formula" data-status-formula>222.5 × 92.2% · 就近取整 · 上限 205</small>
+            <small class="calc-formula" data-status-formula>222.5 × 92.2% · 取最近 2.5 kg · 上限 205</small>
           </div>
           <div class="calc-support">
             <span>最低</span><b data-floor-kg>200</b>
-            <small class="calc-formula" data-floor-formula>212.5 × 94.0% · 向上取整</small>
+            <small class="calc-formula" data-floor-formula>212.5 × 94.0% · 取最近 2.5 kg</small>
           </div>
         </div>
       </div>
@@ -2099,12 +2093,11 @@
     </div>
   </main>
   <script>
-    const settings = {"base": 212.5, "step": 5, "tng": 1, "close": 0.95};
+    const settings = {"base": 212.5, "step": 2.5, "tng": 1, "close": 0.95};
     const htmlRoot = document.documentElement;
     const snapshot = htmlRoot.dataset.snapshot;
     const prefix = 'sbd-2026-11-17-html:' + (snapshot ? `${snapshot}:` : '');
     const fields = document.querySelectorAll('[data-store]');
-    const stepField = document.getElementById('bench-step');
     const saveButton = document.getElementById('save-file');
     const saveStatus = document.getElementById('save-status');
     const sessions = [...document.querySelectorAll('.session')];
@@ -2145,9 +2138,7 @@
       copy.querySelectorAll('[data-store]').forEach((target, i) => {
         const value = fields[i].value;
         if (target.tagName === 'TEXTAREA') target.textContent = value;
-        else if (target.tagName === 'SELECT') {
-          for (const option of target.options) option.toggleAttribute('selected', option.value === value);
-        } else target.setAttribute('value', value);
+        else target.setAttribute('value', value);
       });
       copy.querySelector('#save-file').removeAttribute('disabled');
       copy.querySelector('#save-status').textContent = '训练记录备份';
@@ -2198,13 +2189,13 @@
     function recalculate(session) {
       const input = session.querySelector('.e1rm');
       const basis = session.querySelector('.calc-basis');
-      const step = Number(stepField.value) || settings.step;
+      const step = settings.step;
       const base = input.value === '' ? Number(session.dataset.preview) : input.valueAsNumber;
       const valid = !input.validity.badInput && Number.isFinite(base) && base > 0;
       const round = amount => Math.round(amount / step + 1e-9) * step;
       const floorRate = Number(session.dataset.floor);
       const statusRate = Number(session.dataset.rate);
-      const floorKg = Math.ceil(settings.base * floorRate / step - 1e-9) * step;
+      const floorKg = round(settings.base * floorRate);
       const assessed = round(base * statusRate);
       const cap = session.dataset.assessmentCap;
       const byStatus = cap ? Math.min(Number(cap), assessed) : assessed;
@@ -2213,7 +2204,7 @@
       basis.textContent = !valid ? '请输入有效重量' : input.value === '' ? `预览基准 ${base} kg` : `采用 ${base} kg`;
       session.querySelector('[data-floor-kg]').textContent = floorKg;
       session.querySelector('[data-status-kg]').textContent = valid ? byStatus : '—';
-      session.querySelector('[data-status-formula]').textContent = valid ? `${base} × ${(100 * statusRate).toFixed(1)}% · 就近取整${cap ? ` · 上限 ${cap}` : ''}` : '—';
+      session.querySelector('[data-status-formula]').textContent = valid ? `${base} × ${(100 * statusRate).toFixed(1)}% · 取最近 ${step} kg${cap ? ` · 上限 ${cap}` : ''}` : '—';
       session.querySelector('[data-top-kg]').textContent = valid ? top : '—';
       session.querySelector('.calc-top').classList.toggle('at-floor', valid && floorKg > byStatus);
 
@@ -2231,7 +2222,6 @@
       field.addEventListener('input', () => {
         saveValue(field);
         showSaveStatus(true);
-        if (field === stepField) sessions.forEach(recalculate);
         if (field.classList.contains('e1rm')) recalculate(field.closest('.session'));
       });
     });
