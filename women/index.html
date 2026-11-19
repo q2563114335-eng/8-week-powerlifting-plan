@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8 周 RTS 力量举计划 · 女生版</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #162c3b;
+  --muted: #49606c;
+  --navy: #142d40;
+  --navy-light: #203e52;
+  --teal: #09675d;
+  --mint: #dcf2ec;
+  --paper: #fffefa;
+  --cream: #f5f3eb;
+  --tint: #eef5f3;
+  --line: #cedbd9;
+  --alert: #8a3f0c;
+  --alert-bg: #fff0e0;
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 78px; }
+body { margin: 0; color: var(--ink); background: var(--cream); font-size: 14px; line-height: 1.55; }
+.wrap { width: min(100% - 40px, 1200px); margin-inline: auto; }
+.masthead { color: #fff; background: var(--navy); padding: 29px 0 24px; }
+.masthead .period { color: #bce8df; font-size: 13px; font-weight: 650; font-variant-numeric: tabular-nums; }
+h1, h2, h3, p { margin: 0; }
+h1 { margin: 6px 0 18px; font-size: clamp(26px, 4.7vw, 42px); line-height: 1.2; letter-spacing: -.035em; }
+.goal-grid { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.goal { padding: 10px 13px 12px; border-radius: 10px; background: var(--navy-light); }
+.goal dt { color: #d4e8eb; font-size: 13px; }
+.goal dd { margin: 2px 0 0; display: flex; align-items: baseline; flex-wrap: wrap; column-gap: 5px; font-variant-numeric: tabular-nums; font-size: clamp(13px, 2vw, 19px); }
+.goal strong { font-size: clamp(19px, 2.9vw, 30px); font-weight: 750; color: #a9e8d9; line-height: 1.2; }
+.goal .unit { color: #cce1e5; font-size: 12px; }
+.toolbar { position: sticky; z-index: 2; top: 0; margin: 12px 0; padding: 9px 11px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 14px; }
+.week-nav, .date-tools, .basis, .inline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.week-nav { gap: 4px; }
+.date-tools { flex: 1; justify-content: center; }
+.date-status, .status, .muted, .data-note, .session-copy, .week-copy, .basis output { color: var(--muted); }
+.date-status { font-size: 12px; }
+button, a.button, select, input, textarea { font: inherit; }
+button, a.button, select { display: inline-block; padding: 4px 9px; min-height: 34px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink); text-decoration: none; }
+button[hidden] { display: none; }
+button, select { cursor: pointer; }
+button:hover, a.button:hover { border-color: var(--teal); color: var(--teal); }
+a.button[aria-current="true"] { color: var(--teal); background: var(--mint); border-color: var(--teal); font-weight: 700; }
+button.primary { color: white; background: var(--teal); border-color: var(--teal); }
+button.primary:hover { color: white; background: #084e48; }
+a:not(.button) { color: var(--teal); }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.masthead :focus-visible { outline-color: #a9e8d9; }
+input, textarea { color: var(--ink); background: #fff; border: 1px solid #b5c9c7; border-radius: 5px; padding: 4px 6px; min-height: 33px; }
+input[type="number"] { width: 70px; appearance: textfield; }
+input::-webkit-inner-spin-button, input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+.status:empty { display: none; }
+.status { margin: 0 0 10px; }
+.status.error { color: var(--alert); font-weight: 650; }
+.guide, .week { margin-bottom: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+summary { cursor: pointer; padding: 10px 13px; font-weight: 680; }
+.details-body { padding: 0 13px 13px; overflow-wrap: anywhere; }
+.details-body p + p { margin-top: 7px; }
+.details-body h3 { margin: 10px 0 4px; font-size: 16px; }
+.details-body ul { margin: 4px 0; padding-inline-start: 22px; }
+.week { margin-bottom: 22px; }
+.week-head { padding: 13px 15px; border-radius: 11px 11px 0 0; color: #fff; background: var(--navy); }
+.week-head h2 { font-size: clamp(18px, 2.8vw, 23px); line-height: 1.35; }
+.week-head h2 span { color: #a9e8d9; margin-right: 9px; }
+.week-copy { color: #d6e8eb; margin-top: 3px; font-size: 13px; }
+.pivot-control { padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--mint); }
+.day { margin: 10px 11px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.day.selected { border: 2px solid var(--teal); margin: 9px 10px 11px; }
+.day:focus { outline: none; }
+.day-heading { padding: 9px 12px; border-radius: 9px 9px 0 0; background: var(--tint); }
+.day.selected .day-heading { background: var(--mint); }
+.day-heading .date { display: inline-block; margin-right: 7px; font-variant-numeric: tabular-nums; font-weight: 720; color: var(--teal); }
+.day-heading h3 { display: inline; font-size: 17px; }
+.session-copy { margin-top: 4px; font-size: 13px; }
+.basis { margin-top: 7px; gap: 6px 12px; font-size: 13px; }
+.basis label, .session-log label { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 5px; }
+table { width: 100%; table-layout: fixed; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { padding: 5px 6px; text-align: center; vertical-align: middle; border-bottom: 1px solid var(--line); }
+th:first-child { text-align: left; }
+thead th { font-size: 12px; background: #e9f1f0; color: #385360; }
+tbody th { font-weight: 660; }
+tbody tr:nth-child(even) > * { background: #f7faf9; }
+.plan-table .exercise { width: 24%; }
+.plan-table .scheme { width: 8%; }
+.plan-table .intensity { width: 10%; }
+.plan-table .load { width: 13%; }
+.plan-table .record { width: 9%; }
+.plan-table output { display: block; }
+.plan-table input { width: 100%; text-align: center; }
+.plan-table .exercise-note { display: block; margin-top: 2px; font-size: 12px; color: var(--muted); font-weight: 400; }
+.plan-table .top-row th, .plan-table .target-row th { border-left: 3px solid var(--teal); }
+.plan-table .target-row th, .plan-table .target-row td { background: #e8f5f0; }
+.plan-table .weight, .plan-table .test-load { color: var(--teal); font-weight: 750; }
+.plan-table .load-note, .plan-table .gate { display: block; font-size: 11px; color: var(--muted); line-height: 1.4; }
+.plan-table .gate.ok { color: var(--teal); font-weight: 700; }
+.plan-table .is-reduced, .plan-table .over, .plan-table .gate.closed { color: var(--alert); }
+.plan-table .over { background: var(--alert-bg); }
+.session-log { padding: 0 12px 8px; }
+.session-log summary { padding-inline: 0; }
+.session-log .inline { margin-bottom: 6px; gap: 7px 12px; }
+.session-log textarea { display: block; width: 100%; resize: vertical; }
+.overview-table th:first-child { width: 19%; }
+.data-note, footer { font-size: 12px; }
+.data-note { padding: 7px 13px; }
+footer { color: var(--muted); padding-bottom: 17px; }
+@media screen and (max-width: 900px) {
+  .plan-table, .overview-table, .plan-table tbody, .overview-table tbody { display: block; }
+  .plan-table colgroup { display: none; }
+  table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .plan-table tbody tr, .overview-table tbody tr { display: grid; border-bottom: 1px solid var(--line); }
+  .plan-table tbody tr { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .overview-table tbody tr { grid-template-columns: repeat(15, minmax(0, 1fr)); }
+  .plan-table tbody th, .overview-table tbody th {
+    grid-column: 1 / -1; width: auto; border: 0; padding: 6px 8px; background: var(--tint); overflow-wrap: anywhere;
+  }
+  .plan-table tbody td, .overview-table tbody td { border: 0; padding: 4px 6px 5px; text-align: left; overflow-wrap: anywhere; }
+  td[data-label]::before { content: attr(data-label); display: block; margin-bottom: 2px; font-size: 11px; line-height: 1.25; color: var(--muted); }
+  .plan-table td:nth-child(n+2):nth-child(-n+4) { grid-column: span 4; }
+  .plan-table td:nth-child(n+5):nth-child(-n+8), .overview-table td:nth-child(n+2):nth-child(-n+6) { grid-column: span 3; }
+  .overview-table td:nth-child(n+7) { grid-column: span 5; }
+  .plan-table td:nth-child(n+5):nth-child(-n+8) { border-top: 1px solid var(--line); }
+  .plan-table :is(input, select) { width: 100%; min-width: 0; min-height: 38px; padding: 3px 4px; }
+  .plan-table td.assessment { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; padding-top: 0; }
+  .plan-table .assessment select { width: auto; }
+  .plan-table td.assessment-empty { display: none; }
+}
+@media screen and (max-width: 660px) {
+  html { scroll-padding-top: 122px; }
+  .wrap { width: calc(100% - 18px); }
+  .masthead { padding: 21px 0 15px; }
+  h1 { margin-bottom: 13px; }
+  .goal-grid { gap: 5px; }
+  .goal { padding: 7px 6px 8px; border-radius: 7px; }
+  .goal dd { column-gap: 3px; }
+  .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; margin: 7px 0 9px; padding: 6px; }
+  .week-nav { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 3px; }
+  .week-nav a.button { min-width: 0; padding-inline: 0; text-align: center; font-size: 12px; }
+  .date-tools { justify-content: flex-start; }
+  .date-status { line-height: 1.25; }
+  .actions button { font-size: 12px; padding-inline: 5px; }
+  .day { margin: 7px 5px 9px; }
+  .day.selected { margin: 6px 4px 8px; }
+  .day :is(input, select, textarea) { font-size: 16px; }
+  .session-log, .day-heading { padding-inline: 8px; }
+  .session-log label { font-size: 13px; }
+}
+@media print {
+  body { background: white; font-size: 10px; }
+  .wrap { width: 100%; }
+  .masthead, .week-head, .goal { color: var(--ink); background: white; }
+  .masthead :is(dt, dd, strong, .unit, .period), .week-head :is(span, p) { color: var(--ink); }
+  .toolbar, .status, footer, .basis, .session-log, .pivot-control, .guide:not([open]) { display: none; }
+  .plan-table input { min-height: 0; border: 0; padding: 0; }
+  .day { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <p id="period" class="period"></p>
+    <h1 id="main-title">8 周 RTS 力量举计划 · 女生版</h1>
+    <dl id="goals" class="goal-grid" aria-label="当前单次 PR 与第八周目标"></dl>
+  </div>
+</header>
+<main class="wrap">
+  <div class="toolbar">
+    <nav id="week-nav" class="week-nav" aria-label="选择训练周"></nav>
+    <div class="date-tools">
+      <span class="date-status" id="date-status" role="status" aria-live="polite">正在获取日期…</span>
+      <button id="today" type="button" hidden>返回今日</button>
+    </div>
+    <div class="actions"><button id="save-file" class="primary" type="button">下载训练记录</button></div>
+  </div>
+  <p id="status" class="status" role="status" aria-live="polite"></p>
+  <noscript><p>请启用 JavaScript 以显示训练表、计算重量和保存记录。</p></noscript>
+  <details class="guide">
+    <summary>选重、停止与进阶规则</summary>
+    <div id="rules" class="details-body"></div>
+  </details>
+  <details class="guide">
+    <summary>每周排课与编排依据</summary>
+    <div id="evidence" class="details-body"></div>
+  </details>
+  <details class="guide" open>
+    <summary>周总览与实做趋势</summary>
+    <div id="overview" class="table-scroll"></div>
+    <p id="trend-note" class="data-note"></p>
+  </details>
+  <div id="weeks"></div>
+</main>
+<footer class="wrap">记录随浏览器保存在当前打开位置。下载的副本含当前记录，可离线打开。</footer>
+<script id="program" type="application/json">
+{
+  "title": "8 周 RTS 力量举计划 · 女生版",
+  "filename": "rts-8-week-powerlifting-women.html",
+  "version": "women-20261124-v1",
+  "baselines": {
+    "b": 50,
+    "s": 90,
+    "d": 120
+  },
+  "targets": {
+    "b": 55,
+    "s": 95,
+    "d": 130
+  },
+  "weeks": [
+    {
+      "title": "开训校准",
+      "copy": "热身后先做第一个动作的 Top。完成该项回组后再换动作。重单次上限 @7，技术单次留出更多余量。",
+      "pivot": false
+    },
+    {
+      "title": "发展 A · 建立基线",
+      "copy": "固定周二、周四、周六三练。以周四 T&G 卧推及周六蹲拉的标准单次作为趋势基线。",
+      "pivot": false
+    },
+    {
+      "title": "发展 A · 重复比较",
+      "copy": "复制 W2 的刺激。优先同重量做得更轻，已留出明显余量再小幅加重。",
+      "pivot": false
+    },
+    {
+      "title": "发展 A · 复核反应",
+      "copy": "默认复制 W2–3。若连续两次同条件表现下滑且回组也更吃力，可在本周开练前切换短过渡。",
+      "pivot": true
+    },
+    {
+      "title": "发展 B · 专项强化",
+      "copy": "周六蹲拉单次推进到 @8。周四卧推维持 @8，回组由四次转为三次。",
+      "pivot": false
+    },
+    {
+      "title": "发展 B · 重复比较",
+      "copy": "沿用 W5 的处方，依据单次与回组的实际 RPE 微调重量。",
+      "pivot": false
+    },
+    {
+      "title": "减量 · 保留强度",
+      "copy": "周四卧推和周六蹲拉保留约 @8.5 的重单次。减少回组和辅助量，为验收留出恢复。",
+      "pivot": false
+    },
+    {
+      "title": "分日验收",
+      "copy": "周二验收深蹲 95 kg，周四验收 T&G 卧推 55 kg，周六验收硬拉 130 kg。暂停直腿硬拉与器械辅助。",
+      "pivot": false
+    }
+  ],
+  "sessions": [
+    {
+      "id": "w1d1",
+      "date": "2026-11-24",
+      "week": 1,
+      "dayLabel": "周二 · D1",
+      "title": "深蹲容量 · 停顿卧推 · 直腿硬拉",
+      "copy": "深蹲 Top 和容量组全部做完，再做停顿卧推 Top 和回组。直腿硬拉放在卧推后，从区间下沿试起。",
+      "rows": [
+        {
+          "id": "squat-tech-top",
+          "family": "s",
+          "name": "深蹲 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "squat-volume",
+          "family": "s",
+          "name": "深蹲 · 容量",
+          "sets": 2,
+          "reps": 5,
+          "first": 6,
+          "cap": 7
+        },
+        {
+          "id": "pause-top",
+          "family": "p",
+          "name": "停顿卧推 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "rate": 0.72
+        },
+        {
+          "id": "pause",
+          "family": "p",
+          "name": "停顿卧推 · 技术回组",
+          "sets": 2,
+          "reps": 3,
+          "first": null,
+          "cap": 6,
+          "rate": 0.68,
+          "note": "胸前停稳约 1 秒，保持张力。"
+        },
+        {
+          "id": "sldl",
+          "name": "直腿硬拉",
+          "sets": 2,
+          "reps": 6,
+          "cap": 6,
+          "fixedRange": "55–65 kg",
+          "note": "膝微屈且角度基本固定。髋向后坐，杠贴腿，下放至仍能稳住腰背的位置。"
+        },
+        {
+          "id": "extension",
+          "name": "腿屈伸",
+          "sets": 1,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "abduction",
+          "name": "髋外展",
+          "sets": 1,
+          "reps": "12–15",
+          "cap": 7
+        },
+        {
+          "id": "adduction",
+          "name": "髋内收",
+          "sets": 1,
+          "reps": "12–15",
+          "cap": 6
+        }
+      ]
+    },
+    {
+      "id": "w1d2",
+      "date": "2026-11-26",
+      "week": 1,
+      "dayLabel": "周四 · D2",
+      "title": "重 T&G 卧推 · 上肢辅助",
+      "copy": "先完成 T&G 卧推 Top 和回组，再做器械推肩与胸托划船。",
+      "rows": [
+        {
+          "id": "bench-top",
+          "family": "b",
+          "name": "T&G 卧推 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7,
+          "cap": 7,
+          "anchor": true,
+          "floorGuide": true
+        },
+        {
+          "id": "bench-back",
+          "family": "b",
+          "name": "T&G 卧推 · 回组",
+          "sets": 2,
+          "reps": 5,
+          "first": 6,
+          "cap": 7
+        },
+        {
+          "id": "shoulder-press",
+          "name": "器械推肩",
+          "sets": 1,
+          "reps": "8–12",
+          "cap": 6
+        },
+        {
+          "id": "row",
+          "name": "胸托划船",
+          "sets": 1,
+          "reps": "8–12",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w1d3",
+      "date": "2026-11-28",
+      "week": 1,
+      "dayLabel": "周六 · D3",
+      "title": "蹲拉专项 · 轻 T&G 卧推",
+      "copy": "按深蹲、硬拉、轻 T&G 卧推的顺序训练。每项完成 Top 和回组后，再开始下一项。",
+      "rows": [
+        {
+          "id": "squat-top",
+          "family": "s",
+          "name": "深蹲 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7,
+          "cap": 7,
+          "anchor": true
+        },
+        {
+          "id": "squat-back",
+          "family": "s",
+          "name": "深蹲 · 回组",
+          "sets": 2,
+          "reps": 4,
+          "first": 6,
+          "cap": 7
+        },
+        {
+          "id": "dead-top",
+          "family": "d",
+          "name": "硬拉 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7,
+          "cap": 7,
+          "anchor": true
+        },
+        {
+          "id": "dead-back",
+          "family": "d",
+          "name": "硬拉 · 回组",
+          "sets": 2,
+          "reps": 3,
+          "first": 6,
+          "cap": 7
+        },
+        {
+          "id": "bench-tech-top",
+          "family": "b",
+          "name": "T&G 卧推 · 轻 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "bench-volume",
+          "family": "b",
+          "name": "T&G 卧推 · 轻容量回组",
+          "sets": 2,
+          "reps": 4,
+          "first": 6,
+          "cap": 7
+        },
+        {
+          "id": "press",
+          "name": "倒蹬（腿举）",
+          "sets": 1,
+          "reps": "8–10",
+          "cap": 7
+        },
+        {
+          "id": "curl",
+          "name": "腿弯举",
+          "sets": 1,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "calf",
+          "name": "提踵",
+          "sets": 1,
+          "reps": "12–15",
+          "cap": 6
+        }
+      ]
+    },
+    {
+      "id": "w2d1",
+      "date": "2026-12-01",
+      "week": 2,
+      "dayLabel": "周二 · D1",
+      "title": "深蹲容量 · 停顿卧推 · 直腿硬拉",
+      "copy": "深蹲 Top 和容量组全部做完，再做停顿卧推 Top 和回组。直腿硬拉放在卧推后，从区间下沿试起。",
+      "rows": [
+        {
+          "id": "squat-tech-top",
+          "family": "s",
+          "name": "深蹲 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6.5,
+          "top": true,
+          "first": 6.5
+        },
+        {
+          "id": "squat-volume",
+          "family": "s",
+          "name": "深蹲 · 容量",
+          "sets": 3,
+          "reps": 5,
+          "first": 6,
+          "cap": 7.5
+        },
+        {
+          "id": "pause-top",
+          "family": "p",
+          "name": "停顿卧推 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "rate": 0.76
+        },
+        {
+          "id": "pause",
+          "family": "p",
+          "name": "停顿卧推 · 技术回组",
+          "sets": 2,
+          "reps": 3,
+          "first": null,
+          "cap": 6,
+          "rate": 0.7,
+          "note": "胸前停稳约 1 秒，保持张力。"
+        },
+        {
+          "id": "sldl",
+          "name": "直腿硬拉",
+          "sets": 2,
+          "reps": 6,
+          "cap": 7,
+          "fixedRange": "60–70 kg",
+          "note": "膝微屈且角度基本固定。髋向后坐，杠贴腿，下放至仍能稳住腰背的位置。"
+        },
+        {
+          "id": "extension",
+          "name": "腿屈伸",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "abduction",
+          "name": "髋外展",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7
+        },
+        {
+          "id": "adduction",
+          "name": "髋内收",
+          "sets": 1,
+          "reps": "12–15",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w2d2",
+      "date": "2026-12-03",
+      "week": 2,
+      "dayLabel": "周四 · D2",
+      "title": "重 T&G 卧推 · 上肢辅助",
+      "copy": "先完成 T&G 卧推 Top 和回组，再做器械推肩与胸托划船。",
+      "rows": [
+        {
+          "id": "bench-top",
+          "family": "b",
+          "name": "T&G 卧推 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true,
+          "floorGuide": true
+        },
+        {
+          "id": "bench-back",
+          "family": "b",
+          "name": "T&G 卧推 · 回组",
+          "sets": 3,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "shoulder-press",
+          "name": "器械推肩",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7
+        },
+        {
+          "id": "row",
+          "name": "胸托划船",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w2d3",
+      "date": "2026-12-05",
+      "week": 2,
+      "dayLabel": "周六 · D3",
+      "title": "蹲拉专项 · 轻 T&G 卧推",
+      "copy": "按深蹲、硬拉、轻 T&G 卧推的顺序训练。每项完成 Top 和回组后，再开始下一项。",
+      "rows": [
+        {
+          "id": "squat-top",
+          "family": "s",
+          "name": "深蹲 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7.5,
+          "cap": 7.5,
+          "anchor": true
+        },
+        {
+          "id": "squat-back",
+          "family": "s",
+          "name": "深蹲 · 回组",
+          "sets": 2,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "dead-top",
+          "family": "d",
+          "name": "硬拉 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7.5,
+          "cap": 7.5,
+          "anchor": true
+        },
+        {
+          "id": "dead-back",
+          "family": "d",
+          "name": "硬拉 · 回组",
+          "sets": 3,
+          "reps": 3,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "bench-tech-top",
+          "family": "b",
+          "name": "T&G 卧推 · 轻 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "bench-volume",
+          "family": "b",
+          "name": "T&G 卧推 · 轻容量回组",
+          "sets": 2,
+          "reps": 5,
+          "first": 6,
+          "cap": 7.5
+        },
+        {
+          "id": "press",
+          "name": "倒蹬（腿举）",
+          "sets": 2,
+          "reps": "8–10",
+          "cap": 7
+        },
+        {
+          "id": "curl",
+          "name": "腿弯举",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "calf",
+          "name": "提踵",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w3d1",
+      "date": "2026-12-08",
+      "week": 3,
+      "dayLabel": "周二 · D1",
+      "title": "深蹲容量 · 停顿卧推 · 直腿硬拉",
+      "copy": "深蹲 Top 和容量组全部做完，再做停顿卧推 Top 和回组。直腿硬拉放在卧推后，从区间下沿试起。",
+      "rows": [
+        {
+          "id": "squat-tech-top",
+          "family": "s",
+          "name": "深蹲 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6.5,
+          "top": true,
+          "first": 6.5
+        },
+        {
+          "id": "squat-volume",
+          "family": "s",
+          "name": "深蹲 · 容量",
+          "sets": 3,
+          "reps": 5,
+          "first": 6,
+          "cap": 7.5
+        },
+        {
+          "id": "pause-top",
+          "family": "p",
+          "name": "停顿卧推 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "rate": 0.76
+        },
+        {
+          "id": "pause",
+          "family": "p",
+          "name": "停顿卧推 · 技术回组",
+          "sets": 2,
+          "reps": 3,
+          "first": null,
+          "cap": 6,
+          "rate": 0.7,
+          "note": "胸前停稳约 1 秒，保持张力。"
+        },
+        {
+          "id": "sldl",
+          "name": "直腿硬拉",
+          "sets": 2,
+          "reps": 6,
+          "cap": 7,
+          "fixedRange": "60–70 kg",
+          "note": "膝微屈且角度基本固定。髋向后坐，杠贴腿，下放至仍能稳住腰背的位置。"
+        },
+        {
+          "id": "extension",
+          "name": "腿屈伸",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "abduction",
+          "name": "髋外展",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7
+        },
+        {
+          "id": "adduction",
+          "name": "髋内收",
+          "sets": 1,
+          "reps": "12–15",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w3d2",
+      "date": "2026-12-10",
+      "week": 3,
+      "dayLabel": "周四 · D2",
+      "title": "重 T&G 卧推 · 上肢辅助",
+      "copy": "先完成 T&G 卧推 Top 和回组，再做器械推肩与胸托划船。",
+      "rows": [
+        {
+          "id": "bench-top",
+          "family": "b",
+          "name": "T&G 卧推 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true,
+          "floorGuide": true
+        },
+        {
+          "id": "bench-back",
+          "family": "b",
+          "name": "T&G 卧推 · 回组",
+          "sets": 3,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "shoulder-press",
+          "name": "器械推肩",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7
+        },
+        {
+          "id": "row",
+          "name": "胸托划船",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w3d3",
+      "date": "2026-12-12",
+      "week": 3,
+      "dayLabel": "周六 · D3",
+      "title": "蹲拉专项 · 轻 T&G 卧推",
+      "copy": "按深蹲、硬拉、轻 T&G 卧推的顺序训练。每项完成 Top 和回组后，再开始下一项。",
+      "rows": [
+        {
+          "id": "squat-top",
+          "family": "s",
+          "name": "深蹲 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7.5,
+          "cap": 7.5,
+          "anchor": true
+        },
+        {
+          "id": "squat-back",
+          "family": "s",
+          "name": "深蹲 · 回组",
+          "sets": 2,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "dead-top",
+          "family": "d",
+          "name": "硬拉 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7.5,
+          "cap": 7.5,
+          "anchor": true
+        },
+        {
+          "id": "dead-back",
+          "family": "d",
+          "name": "硬拉 · 回组",
+          "sets": 3,
+          "reps": 3,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "bench-tech-top",
+          "family": "b",
+          "name": "T&G 卧推 · 轻 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "bench-volume",
+          "family": "b",
+          "name": "T&G 卧推 · 轻容量回组",
+          "sets": 2,
+          "reps": 5,
+          "first": 6,
+          "cap": 7.5
+        },
+        {
+          "id": "press",
+          "name": "倒蹬（腿举）",
+          "sets": 2,
+          "reps": "8–10",
+          "cap": 7
+        },
+        {
+          "id": "curl",
+          "name": "腿弯举",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "calf",
+          "name": "提踵",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w4d1",
+      "date": "2026-12-15",
+      "week": 4,
+      "dayLabel": "周二 · D1",
+      "title": "深蹲容量 · 停顿卧推 · 直腿硬拉",
+      "copy": "深蹲 Top 和容量组全部做完，再做停顿卧推 Top 和回组。直腿硬拉放在卧推后，从区间下沿试起。",
+      "rows": [
+        {
+          "id": "squat-tech-top",
+          "family": "s",
+          "name": "深蹲 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6.5,
+          "top": true,
+          "first": 6.5,
+          "pivot": {
+            "first": 6,
+            "cap": 6
+          }
+        },
+        {
+          "id": "squat-volume",
+          "family": "s",
+          "name": "深蹲 · 容量",
+          "sets": 3,
+          "reps": 5,
+          "first": 6,
+          "cap": 7.5,
+          "pivot": {
+            "sets": 2,
+            "first": 6,
+            "cap": 7
+          }
+        },
+        {
+          "id": "pause-top",
+          "family": "p",
+          "name": "停顿卧推 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "rate": 0.76,
+          "pivot": {
+            "rate": 0.7,
+            "cap": 6
+          }
+        },
+        {
+          "id": "pause",
+          "family": "p",
+          "name": "停顿卧推 · 技术回组",
+          "sets": 2,
+          "reps": 3,
+          "first": null,
+          "cap": 6,
+          "rate": 0.7,
+          "note": "胸前停稳约 1 秒，保持张力。",
+          "pivot": {
+            "sets": 1,
+            "rate": 0.65,
+            "cap": 6
+          }
+        },
+        {
+          "id": "sldl",
+          "name": "直腿硬拉",
+          "sets": 2,
+          "reps": 6,
+          "cap": 7,
+          "fixedRange": "60–70 kg",
+          "note": "膝微屈且角度基本固定。髋向后坐，杠贴腿，下放至仍能稳住腰背的位置。",
+          "pivot": {
+            "sets": 1,
+            "cap": 6,
+            "fixedRange": "50–60 kg"
+          }
+        },
+        {
+          "id": "extension",
+          "name": "腿屈伸",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7,
+          "pivot": {
+            "sets": 1,
+            "cap": 6
+          }
+        },
+        {
+          "id": "abduction",
+          "name": "髋外展",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7,
+          "pivot": {
+            "sets": 1,
+            "cap": 6
+          }
+        },
+        {
+          "id": "adduction",
+          "name": "髋内收",
+          "sets": 1,
+          "reps": "12–15",
+          "cap": 7,
+          "pivot": {
+            "sets": 1,
+            "cap": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "w4d2",
+      "date": "2026-12-17",
+      "week": 4,
+      "dayLabel": "周四 · D2",
+      "title": "重 T&G 卧推 · 上肢辅助",
+      "copy": "先完成 T&G 卧推 Top 和回组，再做器械推肩与胸托划船。",
+      "rows": [
+        {
+          "id": "bench-top",
+          "family": "b",
+          "name": "T&G 卧推 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true,
+          "floorGuide": true
+        },
+        {
+          "id": "bench-back",
+          "family": "b",
+          "name": "T&G 卧推 · 回组",
+          "sets": 3,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5,
+          "pivot": {
+            "sets": 2,
+            "first": 6,
+            "cap": 7
+          }
+        },
+        {
+          "id": "shoulder-press",
+          "name": "器械推肩",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7,
+          "pivot": {
+            "sets": 1,
+            "cap": 6
+          }
+        },
+        {
+          "id": "row",
+          "name": "胸托划船",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7,
+          "pivot": {
+            "sets": 1,
+            "cap": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "w4d3",
+      "date": "2026-12-19",
+      "week": 4,
+      "dayLabel": "周六 · D3",
+      "title": "蹲拉专项 · 轻 T&G 卧推",
+      "copy": "按深蹲、硬拉、轻 T&G 卧推的顺序训练。每项完成 Top 和回组后，再开始下一项。",
+      "rows": [
+        {
+          "id": "squat-top",
+          "family": "s",
+          "name": "深蹲 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7.5,
+          "cap": 7.5,
+          "anchor": true,
+          "pivot": {
+            "sets": 1,
+            "first": 6.5,
+            "cap": 6.5
+          }
+        },
+        {
+          "id": "squat-back",
+          "family": "s",
+          "name": "深蹲 · 回组",
+          "sets": 2,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5,
+          "pivot": {
+            "sets": 2,
+            "first": 6,
+            "cap": 7
+          }
+        },
+        {
+          "id": "dead-top",
+          "family": "d",
+          "name": "硬拉 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 7.5,
+          "cap": 7.5,
+          "anchor": true,
+          "pivot": {
+            "sets": 1,
+            "first": 6.5,
+            "cap": 6.5
+          }
+        },
+        {
+          "id": "dead-back",
+          "family": "d",
+          "name": "硬拉 · 回组",
+          "sets": 3,
+          "reps": 3,
+          "first": 6.5,
+          "cap": 7.5,
+          "pivot": {
+            "sets": 2,
+            "first": 6,
+            "cap": 7
+          }
+        },
+        {
+          "id": "bench-tech-top",
+          "family": "b",
+          "name": "T&G 卧推 · 轻 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "bench-volume",
+          "family": "b",
+          "name": "T&G 卧推 · 轻容量回组",
+          "sets": 2,
+          "reps": 5,
+          "first": 6,
+          "cap": 7.5,
+          "pivot": {
+            "sets": 1,
+            "first": 6,
+            "cap": 7
+          }
+        },
+        {
+          "id": "press",
+          "name": "倒蹬（腿举）",
+          "sets": 2,
+          "reps": "8–10",
+          "cap": 7,
+          "pivot": {
+            "sets": 1,
+            "cap": 6
+          }
+        },
+        {
+          "id": "curl",
+          "name": "腿弯举",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7,
+          "pivot": {
+            "sets": 1,
+            "cap": 6
+          }
+        },
+        {
+          "id": "calf",
+          "name": "提踵",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7,
+          "pivot": {
+            "sets": 1,
+            "cap": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "w5d1",
+      "date": "2026-12-22",
+      "week": 5,
+      "dayLabel": "周二 · D1",
+      "title": "深蹲容量 · 停顿卧推 · 直腿硬拉",
+      "copy": "深蹲 Top 和容量组全部做完，再做停顿卧推 Top 和回组。直腿硬拉放在卧推后，从区间下沿试起。",
+      "rows": [
+        {
+          "id": "squat-tech-top",
+          "family": "s",
+          "name": "深蹲 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 7,
+          "top": true,
+          "first": 7
+        },
+        {
+          "id": "squat-volume",
+          "family": "s",
+          "name": "深蹲 · 容量",
+          "sets": 3,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "pause-top",
+          "family": "p",
+          "name": "停顿卧推 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "rate": 0.78
+        },
+        {
+          "id": "pause",
+          "family": "p",
+          "name": "停顿卧推 · 技术回组",
+          "sets": 2,
+          "reps": 3,
+          "first": null,
+          "cap": 6.5,
+          "rate": 0.72,
+          "note": "胸前停稳约 1 秒，保持张力。"
+        },
+        {
+          "id": "sldl",
+          "name": "直腿硬拉",
+          "sets": 2,
+          "reps": 6,
+          "cap": 6.5,
+          "fixedRange": "65–75 kg",
+          "note": "膝微屈且角度基本固定。髋向后坐，杠贴腿，下放至仍能稳住腰背的位置。"
+        },
+        {
+          "id": "extension",
+          "name": "腿屈伸",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "abduction",
+          "name": "髋外展",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7
+        },
+        {
+          "id": "adduction",
+          "name": "髋内收",
+          "sets": 1,
+          "reps": "12–15",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w5d2",
+      "date": "2026-12-24",
+      "week": 5,
+      "dayLabel": "周四 · D2",
+      "title": "重 T&G 卧推 · 上肢辅助",
+      "copy": "先完成 T&G 卧推 Top 和回组，再做器械推肩与胸托划船。",
+      "rows": [
+        {
+          "id": "bench-top",
+          "family": "b",
+          "name": "T&G 卧推 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true,
+          "floorGuide": true
+        },
+        {
+          "id": "bench-back",
+          "family": "b",
+          "name": "T&G 卧推 · 回组",
+          "sets": 3,
+          "reps": 3,
+          "first": 7,
+          "cap": 7.5
+        },
+        {
+          "id": "shoulder-press",
+          "name": "器械推肩",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7
+        },
+        {
+          "id": "row",
+          "name": "胸托划船",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w5d3",
+      "date": "2026-12-26",
+      "week": 5,
+      "dayLabel": "周六 · D3",
+      "title": "蹲拉专项 · 轻 T&G 卧推",
+      "copy": "按深蹲、硬拉、轻 T&G 卧推的顺序训练。每项完成 Top 和回组后，再开始下一项。",
+      "rows": [
+        {
+          "id": "squat-top",
+          "family": "s",
+          "name": "深蹲 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true
+        },
+        {
+          "id": "squat-back",
+          "family": "s",
+          "name": "深蹲 · 回组",
+          "sets": 2,
+          "reps": 3,
+          "first": 7,
+          "cap": 7.5
+        },
+        {
+          "id": "dead-top",
+          "family": "d",
+          "name": "硬拉 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true
+        },
+        {
+          "id": "dead-back",
+          "family": "d",
+          "name": "硬拉 · 回组",
+          "sets": 2,
+          "reps": 3,
+          "first": 7,
+          "cap": 7.5
+        },
+        {
+          "id": "bench-tech-top",
+          "family": "b",
+          "name": "T&G 卧推 · 轻 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "bench-volume",
+          "family": "b",
+          "name": "T&G 卧推 · 轻容量回组",
+          "sets": 2,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "press",
+          "name": "倒蹬（腿举）",
+          "sets": 1,
+          "reps": "8–10",
+          "cap": 7
+        },
+        {
+          "id": "curl",
+          "name": "腿弯举",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "calf",
+          "name": "提踵",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w6d1",
+      "date": "2026-12-29",
+      "week": 6,
+      "dayLabel": "周二 · D1",
+      "title": "深蹲容量 · 停顿卧推 · 直腿硬拉",
+      "copy": "深蹲 Top 和容量组全部做完，再做停顿卧推 Top 和回组。直腿硬拉放在卧推后，从区间下沿试起。",
+      "rows": [
+        {
+          "id": "squat-tech-top",
+          "family": "s",
+          "name": "深蹲 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 7,
+          "top": true,
+          "first": 7
+        },
+        {
+          "id": "squat-volume",
+          "family": "s",
+          "name": "深蹲 · 容量",
+          "sets": 3,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "pause-top",
+          "family": "p",
+          "name": "停顿卧推 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "rate": 0.78
+        },
+        {
+          "id": "pause",
+          "family": "p",
+          "name": "停顿卧推 · 技术回组",
+          "sets": 2,
+          "reps": 3,
+          "first": null,
+          "cap": 6.5,
+          "rate": 0.72,
+          "note": "胸前停稳约 1 秒，保持张力。"
+        },
+        {
+          "id": "sldl",
+          "name": "直腿硬拉",
+          "sets": 2,
+          "reps": 6,
+          "cap": 6.5,
+          "fixedRange": "65–75 kg",
+          "note": "膝微屈且角度基本固定。髋向后坐，杠贴腿，下放至仍能稳住腰背的位置。"
+        },
+        {
+          "id": "extension",
+          "name": "腿屈伸",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "abduction",
+          "name": "髋外展",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7
+        },
+        {
+          "id": "adduction",
+          "name": "髋内收",
+          "sets": 1,
+          "reps": "12–15",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w6d2",
+      "date": "2026-12-31",
+      "week": 6,
+      "dayLabel": "周四 · D2",
+      "title": "重 T&G 卧推 · 上肢辅助",
+      "copy": "先完成 T&G 卧推 Top 和回组，再做器械推肩与胸托划船。",
+      "rows": [
+        {
+          "id": "bench-top",
+          "family": "b",
+          "name": "T&G 卧推 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true,
+          "floorGuide": true
+        },
+        {
+          "id": "bench-back",
+          "family": "b",
+          "name": "T&G 卧推 · 回组",
+          "sets": 3,
+          "reps": 3,
+          "first": 7,
+          "cap": 7.5
+        },
+        {
+          "id": "shoulder-press",
+          "name": "器械推肩",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7
+        },
+        {
+          "id": "row",
+          "name": "胸托划船",
+          "sets": 2,
+          "reps": "8–12",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w6d3",
+      "date": "2027-01-02",
+      "week": 6,
+      "dayLabel": "周六 · D3",
+      "title": "蹲拉专项 · 轻 T&G 卧推",
+      "copy": "按深蹲、硬拉、轻 T&G 卧推的顺序训练。每项完成 Top 和回组后，再开始下一项。",
+      "rows": [
+        {
+          "id": "squat-top",
+          "family": "s",
+          "name": "深蹲 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true
+        },
+        {
+          "id": "squat-back",
+          "family": "s",
+          "name": "深蹲 · 回组",
+          "sets": 2,
+          "reps": 3,
+          "first": 7,
+          "cap": 7.5
+        },
+        {
+          "id": "dead-top",
+          "family": "d",
+          "name": "硬拉 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8,
+          "cap": 8,
+          "anchor": true
+        },
+        {
+          "id": "dead-back",
+          "family": "d",
+          "name": "硬拉 · 回组",
+          "sets": 2,
+          "reps": 3,
+          "first": 7,
+          "cap": 7.5
+        },
+        {
+          "id": "bench-tech-top",
+          "family": "b",
+          "name": "T&G 卧推 · 轻 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "bench-volume",
+          "family": "b",
+          "name": "T&G 卧推 · 轻容量回组",
+          "sets": 2,
+          "reps": 4,
+          "first": 6.5,
+          "cap": 7.5
+        },
+        {
+          "id": "press",
+          "name": "倒蹬（腿举）",
+          "sets": 1,
+          "reps": "8–10",
+          "cap": 7
+        },
+        {
+          "id": "curl",
+          "name": "腿弯举",
+          "sets": 2,
+          "reps": "10–12",
+          "cap": 7
+        },
+        {
+          "id": "calf",
+          "name": "提踵",
+          "sets": 2,
+          "reps": "12–15",
+          "cap": 7
+        }
+      ]
+    },
+    {
+      "id": "w7d1",
+      "date": "2027-01-05",
+      "week": 7,
+      "dayLabel": "周二 · D1",
+      "title": "深蹲容量 · 停顿卧推 · 直腿硬拉",
+      "copy": "深蹲 Top 和容量组全部做完，再做停顿卧推 Top 和回组。直腿硬拉放在卧推后，从区间下沿试起。",
+      "rows": [
+        {
+          "id": "squat-tech-top",
+          "family": "s",
+          "name": "深蹲 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "squat-volume",
+          "family": "s",
+          "name": "深蹲 · 容量",
+          "sets": 2,
+          "reps": 3,
+          "first": 6,
+          "cap": 7
+        },
+        {
+          "id": "pause-top",
+          "family": "p",
+          "name": "停顿卧推 · 技术 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "rate": 0.7
+        },
+        {
+          "id": "pause",
+          "family": "p",
+          "name": "停顿卧推 · 技术回组",
+          "sets": 1,
+          "reps": 2,
+          "first": null,
+          "cap": 6,
+          "rate": 0.65,
+          "note": "胸前停稳约 1 秒，保持张力。"
+        },
+        {
+          "id": "sldl",
+          "name": "直腿硬拉",
+          "sets": 1,
+          "reps": 5,
+          "cap": 6,
+          "fixedRange": "45–55 kg",
+          "note": "膝微屈且角度基本固定。髋向后坐，杠贴腿，下放至仍能稳住腰背的位置。"
+        },
+        {
+          "id": "extension",
+          "name": "腿屈伸",
+          "sets": 1,
+          "reps": "10–12",
+          "cap": 6
+        }
+      ]
+    },
+    {
+      "id": "w7d2",
+      "date": "2027-01-07",
+      "week": 7,
+      "dayLabel": "周四 · D2",
+      "title": "重 T&G 卧推 · 上肢辅助",
+      "copy": "先完成 T&G 卧推 Top 和回组，再做器械推肩与胸托划船。",
+      "rows": [
+        {
+          "id": "bench-top",
+          "family": "b",
+          "name": "T&G 卧推 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8.5,
+          "cap": 8.5,
+          "anchor": true,
+          "floorGuide": true
+        },
+        {
+          "id": "bench-back",
+          "family": "b",
+          "name": "T&G 卧推 · 回组",
+          "sets": 2,
+          "reps": 2,
+          "first": 6.5,
+          "cap": 7
+        },
+        {
+          "id": "shoulder-press",
+          "name": "器械推肩",
+          "sets": 1,
+          "reps": "8–12",
+          "cap": 6
+        },
+        {
+          "id": "row",
+          "name": "胸托划船",
+          "sets": 1,
+          "reps": "8–12",
+          "cap": 6
+        }
+      ]
+    },
+    {
+      "id": "w7d3",
+      "date": "2027-01-09",
+      "week": 7,
+      "dayLabel": "周六 · D3",
+      "title": "蹲拉专项 · 轻 T&G 卧推",
+      "copy": "按深蹲、硬拉、轻 T&G 卧推的顺序训练。每项完成 Top 和回组后，再开始下一项。",
+      "rows": [
+        {
+          "id": "squat-top",
+          "family": "s",
+          "name": "深蹲 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8.5,
+          "cap": 8.5,
+          "anchor": true
+        },
+        {
+          "id": "squat-back",
+          "family": "s",
+          "name": "深蹲 · 回组",
+          "sets": 1,
+          "reps": 3,
+          "first": 6,
+          "cap": 7
+        },
+        {
+          "id": "dead-top",
+          "family": "d",
+          "name": "硬拉 · Top",
+          "sets": 1,
+          "reps": 1,
+          "first": 8.5,
+          "cap": 8.5,
+          "anchor": true
+        },
+        {
+          "id": "dead-back",
+          "family": "d",
+          "name": "硬拉 · 回组",
+          "sets": 1,
+          "reps": 2,
+          "first": 6,
+          "cap": 7
+        },
+        {
+          "id": "bench-tech-top",
+          "family": "b",
+          "name": "T&G 卧推 · 轻 Top",
+          "sets": 1,
+          "reps": 1,
+          "cap": 6,
+          "top": true,
+          "first": 6
+        },
+        {
+          "id": "bench-volume",
+          "family": "b",
+          "name": "T&G 卧推 · 轻容量回组",
+          "sets": 1,
+          "reps": 3,
+          "first": 6,
+          "cap": 6.5
+        }
+      ]
+    },
+    {
+      "id": "w8d1",
+      "date": "2027-01-12",
+      "week": 8,
+      "dayLabel": "周二 · D1",
+      "title": "深蹲验收 · 停顿技术",
+      "copy": "先测深蹲。热身偏重就下调首把，任何前置单次超过上限就停在已完成重量。 完成深蹲试举后再做轻停顿卧推。",
+      "rows": [
+        {
+          "id": "try1",
+          "family": "s",
+          "name": "深蹲 · Top 评估单次",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 8,
+          "test": true,
+          "fixed": 82.5
+        },
+        {
+          "id": "try2",
+          "family": "s",
+          "name": "深蹲 · 评估单次 2",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 8.5,
+          "test": true,
+          "fixed": 90,
+          "gate": [
+            [
+              {
+                "day": "w8d1",
+                "row": "try1",
+                "kg": 82.5,
+                "maxKg": 82.5,
+                "cap": 8
+              }
+            ]
+          ]
+        },
+        {
+          "id": "try3",
+          "family": "s",
+          "name": "深蹲 · 目标试举",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 10,
+          "test": true,
+          "fixed": 95,
+          "gate": [
+            [
+              {
+                "day": "w8d1",
+                "row": "try2",
+                "kg": 90,
+                "maxKg": 90,
+                "cap": 8.5
+              }
+            ]
+          ],
+          "result": true
+        },
+        {
+          "id": "pause",
+          "family": "p",
+          "name": "停顿卧推 · 轻技术组",
+          "sets": 2,
+          "reps": 2,
+          "first": null,
+          "cap": 6,
+          "rate": 0.6
+        }
+      ]
+    },
+    {
+      "id": "w8d2",
+      "date": "2027-01-14",
+      "week": 8,
+      "dayLabel": "周四 · D2",
+      "title": "T&G 卧推验收",
+      "copy": "热身后先做评估 Top。触胸平稳、臀部贴凳，使用保护杆或请人保护。",
+      "rows": [
+        {
+          "id": "try1",
+          "family": "b",
+          "name": "T&G 卧推 · Top 评估单次",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 8,
+          "test": true,
+          "fixed": 45
+        },
+        {
+          "id": "try2",
+          "family": "b",
+          "name": "T&G 卧推 · 评估单次 2",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 8.5,
+          "test": true,
+          "fixed": 50,
+          "gate": [
+            [
+              {
+                "day": "w8d2",
+                "row": "try1",
+                "kg": 45,
+                "maxKg": 45,
+                "cap": 8
+              }
+            ]
+          ]
+        },
+        {
+          "id": "try3",
+          "family": "b",
+          "name": "T&G 卧推 · 评估单次 3",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 8.5,
+          "test": true,
+          "fixed": 52.5,
+          "gate": [
+            [
+              {
+                "day": "w8d2",
+                "row": "try2",
+                "kg": 50,
+                "maxKg": 50,
+                "cap": 8.5
+              }
+            ]
+          ]
+        },
+        {
+          "id": "try4",
+          "family": "b",
+          "name": "T&G 卧推 · 目标试举",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 10,
+          "test": true,
+          "fixed": 55,
+          "gate": [
+            [
+              {
+                "day": "w8d2",
+                "row": "try3",
+                "kg": 52.5,
+                "maxKg": 52.5,
+                "cap": 8.5
+              }
+            ]
+          ],
+          "result": true
+        }
+      ]
+    },
+    {
+      "id": "w8d3",
+      "date": "2027-01-16",
+      "week": 8,
+      "dayLabel": "周六 · D3",
+      "title": "硬拉验收",
+      "copy": "仅做硬拉。每次从地面静止启动，完全锁定后再下放。",
+      "rows": [
+        {
+          "id": "try1",
+          "family": "d",
+          "name": "硬拉 · Top 评估单次",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 8,
+          "test": true,
+          "fixed": 110
+        },
+        {
+          "id": "try2",
+          "family": "d",
+          "name": "硬拉 · 评估单次 2",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 8.5,
+          "test": true,
+          "fixed": 120,
+          "gate": [
+            [
+              {
+                "day": "w8d3",
+                "row": "try1",
+                "kg": 110,
+                "maxKg": 110,
+                "cap": 8
+              }
+            ]
+          ]
+        },
+        {
+          "id": "try3",
+          "family": "d",
+          "name": "硬拉 · 评估单次 3",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 8.5,
+          "test": true,
+          "fixed": 125,
+          "gate": [
+            [
+              {
+                "day": "w8d3",
+                "row": "try2",
+                "kg": 120,
+                "maxKg": 120,
+                "cap": 8.5
+              }
+            ]
+          ]
+        },
+        {
+          "id": "try4",
+          "family": "d",
+          "name": "硬拉 · 目标试举",
+          "sets": 1,
+          "reps": 1,
+          "first": null,
+          "cap": 10,
+          "test": true,
+          "fixed": 130,
+          "gate": [
+            [
+              {
+                "day": "w8d3",
+                "row": "try3",
+                "kg": 125,
+                "maxKg": 125,
+                "cap": 8.5
+              }
+            ]
+          ],
+          "result": true
+        }
+      ]
+    }
+  ],
+  "rules": "\n<h3>当日选重</h3>\n<p>初始估算单次极限（e1RM）用实际 PR：T&amp;G 卧推 50 kg、硬拉 120 kg、深蹲 90 kg。表内建议重量以 RTS 次数与 RPE 对应比例估算，默认就近取 2.5 kg。每个安排了 Top 的动作先做对应热身，再做 Top 和全部回组，完成后才换下一个动作。周二停顿 Top 用 T&amp;G 当日参考的 70–78% 起步，技术回组用 60–72%，都以实停和 RPE 上限为准。</p>\n<p>“起重”用于找第一组，“上限”约束每一组。RPE 7、8、9 分别约留 3、2、1 次。首组已超上限时，后续组先降重，卧推可降 1–2.5 kg，蹲拉可降 2.5–5 kg；一组做到上限，就在该组收手。Top 的参考下沿是日常建议减 2.5 kg，热身明显偏难时可以继续减。主项回组组间休 3–5 分钟，重单次休 5–8 分钟，器械休 1–2 分钟。</p>\n<p>周二的直腿硬拉按区间下沿试起，动作幅度和 RPE 优先。器械以实际配重记。若逐组变重，表里记末组重量与 RPE，详细重量写入当日备注。组数和次数分开记录；次数不同可填 5/5/4。</p>\n<h3>跨周进阶</h3>\n<p>重复周先比较同重量的 RPE 与动作，回组稳定时再加重。卧推有小片可加 0.5–1 kg；蹲拉通常先加 2.5 kg。周四 T&amp;G 卧推和周六蹲、拉的专项 Top 填足实做重量、1 组、1 次、实际 RPE 和“合格”，@7–9 的记录纳入单项趋势。</p>\n<p>最近两条间隔至多 21 天的有效单次，如果都较当前参考高或低至少一档，页面按卧推 1.25 kg、蹲拉 2.5 kg 调整该项参考。上限超出 0.5 档以上的单次不参与这次合并判定，并在 10 天内临时降低该项建议一档，直到接到新的有效观测。也可以在当天填写同动作的 e1RM 覆盖建议。W4 短过渡减少训练量，周四保留卧推 @8；过渡周单次不纳入进阶比较。</p>\n<h3>第 8 周如何验收</h3>\n<p>评估单次与目标重量都写在当日表内。上一把按表中公斤数做 1 组 1 次，动作合格并在该把 RPE 上限内，下一把才显示可尝试。第一把热身已显吃力，降重另行评估即可；中间把超过上限，就记录当天最好的一把。深蹲达到标准深度，硬拉由地面静止起拉至完全锁定，T&amp;G 卧推触胸有控制、臀部贴凳并完全推起。测试卧推使用保护架或有人保护，动作失控时结束该项。</p>\n",
+  "evidence": "\n<h3>每周三练</h3>\n<ul>\n<li><strong>周二</strong> 先完成深蹲 Top 和容量组，再做停顿卧推 Top 和回组，最后做直腿硬拉及腿部器械辅助。</li>\n<li><strong>周四</strong> 先做重 T&amp;G 卧推 Top 和回组，再做器械推肩、胸托划船。</li>\n<li><strong>周六</strong> 按深蹲、硬拉、轻 T&amp;G 卧推的顺序完成各项 Top 和回组，最后做倒蹬、腿弯举和提踵。</li>\n<li><strong>周日</strong> 休息。</li>\n</ul>\n<h3>为什么重复相同处方</h3>\n<p>W2–4 与 W5–6 分别重复同一周安排，方便用同重量更低 RPE、或同 RPE 更重来识别进步。W7 减量后，W8 把三个验收日分开。55、130 和 95 kg 都以验收日的动作和前置单次为准。</p>\n<p>方法参考 <a href=\"https://store.reactivetrainingsystems.com/blogs/uncategorized/weekly-progressions-and-training-expectations\" rel=\"noreferrer\">RTS 周进阶</a>与<a href=\"https://store.reactivetrainingsystems.com/blogs/advanced-concepts/peaking-with-emerging-strategies\" rel=\"noreferrer\">RTS 达峰</a>。</p>\n",
+  "trendNote": "卧推次数含停顿技术组，硬拉与直腿硬拉分别计数。条件试举单列。观测显示合格单次的重量 @ RPE · e1RM。"
+}
+</script>
+<script id="saved-records" type="application/json">{}</script>
+<script>"use strict";
+
+const rtsColumn = [
+  1.000, .978, .955, .939, .922, .907, .892, .878, .863, .850, .837, .824,
+  .811, .799, .786, .774, .762, .751, .739, .728, .717, .707, .696, .686,
+  .676, .666, .656
+];
+const roundTo = (value, increment = 2.5) => Math.round(value / increment) * increment;
+const finite = (value) => value !== "" && value != null && Number.isFinite(Number(value));
+const format = (value) => Number(value.toFixed(2)).toString();
+const STRENGTH_KEYS = ["b", "s", "d"];
+const FAMILY = {b: "T&G 卧推", s: "深蹲", d: "硬拉"};
+const trendStep = (family) => family === "b" ? 1.25 : 2.5;
+
+function rtsRatio(reps, rpe) {
+  if (!Number.isInteger(reps) || reps < 1 || reps > 12 || rpe < 6 || rpe > 10) return null;
+  const index = (reps + 10 - rpe - 1) * 2;
+  if (!Number.isFinite(index) || index >= rtsColumn.length) return null;
+  const lower = Math.floor(index);
+  const upper = Math.ceil(index);
+  if (upper >= rtsColumn.length) return null;
+  return rtsColumn[lower] + (rtsColumn[upper] - rtsColumn[lower]) * (index - lower);
+}
+
+function observedEstimate(row, log) {
+  if (!row.anchor || log.form !== "ok" || !finite(log.kg) || !finite(log.last)) return null;
+  const weight = Number(log.kg);
+  const rpe = Number(log.last);
+  if (!finite(log.sets) || Number(log.sets) !== 1 || String(log.reps).trim() !== "1"
+      || rpe < 7 || rpe > 9 || weight <= 0) return null;
+  const estimate = weight / rtsRatio(1, rpe);
+  return {family: row.family, weight, rpe, estimate, high: rpe > row.cap + .5};
+}
+
+function getPivotRow(row) {
+  if (!row.pivot) return row;
+  return {...row, ...row.pivot, anchor: false};
+}
+
+function anchorsBefore(program, state, session, family) {
+  const reference = program.baselines[family];
+  let estimate = reference;
+  const history = [];
+  for (const day of program.sessions) {
+    if (day.date >= session.date) break;
+    const candidate = day.rows.find((row) => row.family === family && row.anchor);
+    if (!candidate || state.modes[day.week] === "pivot") continue;
+    const sample = observedEstimate(candidate, state.records[day.id + "-" + candidate.id] ?? {});
+    if (!sample) continue;
+    const prior = history.at(-1);
+    history.push({...sample, date: day.date});
+    if (!prior || daysBetween(prior.date, day.date) > 21 || sample.high || prior.high) continue;
+    const step = trendStep(family);
+    const bothAbove = Math.min(prior.estimate, sample.estimate) >= estimate + step;
+    const bothBelow = Math.max(prior.estimate, sample.estimate) <= estimate - step;
+    if (bothAbove) estimate += step;
+    if (bothBelow) estimate -= step;
+  }
+  return {estimate, history};
+}
+
+function daysBetween(start, finish) {
+  return (Date.parse(finish) - Date.parse(start)) / 86_400_000;
+}
+
+function referenceFor(day, family, program, state) {
+  const trend = anchorsBefore(program, state, day, family);
+  const input = state.daily[day.id]?.[family];
+  if (finite(input) && Number(input) >= 25 && Number(input) <= 300) {
+    return {weight: Number(input), custom: true, reduced: false};
+  }
+  const prior = trend.history.at(-1);
+  const reduced = Boolean(prior?.high && daysBetween(prior.date, day.date) <= 10);
+  return {weight: trend.estimate - (reduced ? trendStep(family) : 0), custom: false, reduced};
+}
+
+function loadSuggestion(row, day, program, state) {
+  if (row.fixed != null) return {weight: row.fixed, source: "评估参考", reduced: false};
+  if (row.fixedRange) return {source: row.fixedRange};
+  if (!row.family || row.first == null && row.rate == null) return {source: "按 RPE"};
+  const related = row.family === "p" ? "b" : row.family;
+  const reference = referenceFor(day, related, program, state);
+  const factor = row.rate ?? rtsRatio(row.reps, row.first);
+  if (!factor) return {source: "按 RPE"};
+  return {
+    weight: roundTo(Math.max(15, reference.weight * factor)),
+    reduced: reference.reduced,
+    source: row.rate ? format(row.rate * 100) + "%" : "起重 @" + format(row.first)
+  };
+}
+
+function previousDone(row, log, maxRpe, minWeight, maxWeight) {
+  if (!log || !log.form || !finite(log.kg) || !finite(log.last) || !finite(log.sets)
+      || String(log.reps).trim() !== "1") return null;
+  return log.form === "ok" && Number(log.sets) === 1 && Number(log.kg) >= (minWeight ?? row.fixed ?? 0)
+    && (maxWeight == null || Number(log.kg) <= maxWeight)
+    && Number(log.last) >= 1 && Number(log.last) <= maxRpe;
+}
+
+function gateStatus(gate, program, state) {
+  if (!gate) return "open";
+  let waiting = false;
+  for (const option of gate) {
+    const outcome = option.map((rule) => {
+      const day = program.sessions.find((entry) => entry.id === rule.day);
+      const row = day.rows.find((entry) => entry.id === rule.row);
+      if (state.modes[day.week] === "pivot") return false;
+      const priorGate = gateStatus(row.gate, program, state);
+      if (priorGate === "closed") return false;
+      if (priorGate === "waiting") return null;
+      return previousDone(row, state.records[day.id + "-" + row.id], rule.cap, rule.kg, rule.maxKg);
+    });
+    if (outcome.every((result) => result === true)) return "open";
+    if (!outcome.includes(false)) waiting = true;
+  }
+  return waiting ? "waiting" : "closed";
+}
+
+function plannedReps(day, mode) {
+  const counts = {b: 0, s: 0, d: 0, sldl: 0, conditional: 0};
+  for (const original of day.rows) {
+    const row = mode === "pivot" ? getPivotRow(original) : original;
+    const family = row.id === "sldl" ? "sldl" : row.family === "p" ? "b" : row.family;
+    if (!family || !Number(row.sets) || !Number(row.reps)) continue;
+    if (row.gate) counts.conditional += row.sets * row.reps;
+    else counts[family] += row.sets * row.reps;
+  }
+  return counts;
+}
+
+const element = (id) => document.getElementById(id);
+const program = JSON.parse(element("program").textContent);
+const embedded = JSON.parse(element("saved-records").textContent);
+const storageKey = "rts-powerlifting-" + program.version;
+const recover = (data) => ({
+  records: data?.records ?? {}, daily: data?.daily ?? {}, modes: data?.modes ?? {},
+  savedAt: data?.savedAt ?? 0
+});
+let state = recover(embedded);
+try {
+  const browserCopy = JSON.parse(localStorage.getItem(storageKey));
+  if (browserCopy && (browserCopy.savedAt ?? 0) > (embedded?.savedAt ?? 0)) state = recover(browserCopy);
+} catch (_) {
+  report("当前浏览器限制自动保存。训练后可下载含记录的副本。", false);
+}
+
+const escapedChars = {"&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "'":"&#39;"};
+const html = (value) => String(value ?? "").replace(/[&<>"']/g, (match) => escapedChars[match]);
+const selected = (actual, option) => actual === option ? " selected" : "";
+const dateText = (date) => date.slice(5).replace("-", ".");
+function domDate(date) {
+  const parts = new Intl.DateTimeFormat("en", {
+    timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit"
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map(({type, value}) => [type, value]));
+  return values.year + "-" + values.month + "-" + values.day;
+}
+
+function report(message, error = false) {
+  element("status").textContent = message;
+  element("status").classList.toggle("error", error);
+}
+
+function save() {
+  state.savedAt = Date.now();
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(state));
+  } catch (_) {
+    report("自动保存不可用。请下载含记录的副本。", true);
+  }
+}
+
+function numField(id, field, label, {value, scope = "record", min, max, step = "any"}) {
+  return `<input type="number" inputmode="${step === 1 ? "numeric" : "decimal"}" aria-label="${html(label)}" data-scope="${scope}" data-key="${html(id)}" data-field="${field}" min="${min}" max="${max}" step="${step}" value="${html(value)}" autocomplete="off">`;
+}
+
+function selector(id, field, label, value, options, scope = "record") {
+  return `<select aria-label="${html(label)}" data-scope="${scope}" data-key="${html(id)}" data-field="${field}">${options.map(([key, text]) =>
+    `<option value="${key}"${selected(value, key)}>${text}</option>`).join("")}</select>`;
+}
+
+function rowCells(original, day, mode) {
+  const row = mode === "pivot" ? getPivotRow(original) : original;
+  const id = day.id + "-" + row.id;
+  const log = state.records[id] ?? {};
+  const name = row.name;
+  const repsLabel = html(row.reps);
+  const intensity = row.cap != null ? "≤" + row.cap : "—";
+  const rowClass = row.result ? "target-row" : (row.anchor || row.top || row.test) ? "top-row" : "";
+  const assessment = row.anchor || row.test || original.anchor;
+  const logField = (field, label, min, max, step) =>
+    numField(id, field, name + " " + label, {value: log[field], min, max, step});
+  const displayStatus = `${row.sets} × ${repsLabel}`;
+  return `<tr id="row-${id}" role="row" class="${rowClass}"><th scope="row" role="rowheader">${html(name)}${row.note ? `<span class="exercise-note">${html(row.note)}</span>` : ""}</th>
+    <td role="cell" data-label="组×次">${displayStatus}</td>
+    <td role="cell" data-label="RPE 上限">${html(intensity)}</td>
+    <td role="cell" id="load-${id}" data-label="建议 kg"></td>
+    <td role="cell" data-label="实做 kg">${logField("kg", "实际 kg", 0, 650)}</td>
+    <td role="cell" data-label="实做组数">${logField("sets", "实做组数", 0, 20, 1)}</td>
+    <td role="cell" data-label="实做次数"><input type="text" aria-label="${html(name)} 每组实做次数" data-scope="record" data-key="${id}" data-field="reps" value="${html(log.reps)}" inputmode="text" autocomplete="off"></td>
+    <td role="cell" data-label="末组 RPE">${logField("last", "实际末组 RPE", 1, 10, 0.5)}</td>
+    <td role="cell" class="${assessment ? "assessment" : "assessment-empty"}" data-label="动作判定">${assessment ? selector(id, "form", name + " 动作判定", log.form,
+      [["", "待记"], ["ok", "合格"], ["bad", "未达标"]]) : "—"}</td></tr>`;
+}
+
+function sessionCard(day) {
+  const mode = state.modes[day.week];
+  const variables = state.daily[day.id] ?? {};
+  const inputs = STRENGTH_KEYS.filter((key) => day.rows.some((r) =>
+    r.fixed == null && (r.family === key || key === "b" && r.family === "p")));
+  const perDayInput = inputs.map((key) => `<label>${FAMILY[key]} e1RM
+    ${numField(day.id, key, FAMILY[key] + " 当日 e1RM", {value: variables[key], scope: "daily", min: 25, max: 300})}
+    <output id="basis-${day.id}-${key}"></output></label>`).join("");
+  const noteFields = [
+    ["sleep", "睡眠（h）", 0, 24, 0.25], ["legs", "腿部疲劳", 0, 3, 1],
+    ["back", "腰背疲劳", 0, 3, 1], ["push", "推肌疲劳", 0, 3, 1]
+  ];
+  return `<section class="day" id="${day.id}" tabindex="-1" aria-labelledby="${day.id}-title">
+    <div class="day-heading"><time class="date" datetime="${day.date}">${dateText(day.date)} · ${html(day.dayLabel)}</time><h3 id="${day.id}-title">${html(day.title)}</h3>
+    <p class="session-copy">${html(mode === "pivot" ? day.pivotCopy ?? day.copy : day.copy)}</p>
+    ${perDayInput ? `<div class="basis">${perDayInput}</div>` : ""}</div>
+    <div class="table-scroll"><table class="plan-table" role="table" aria-label="${html(day.title)}训练明细">
+    <colgroup><col class="exercise"><col class="scheme"><col class="intensity"><col class="load"><col class="record"><col class="record"><col class="record"><col class="record"><col class="record"></colgroup>
+    <thead role="rowgroup"><tr role="row"><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">RPE 上限</th><th scope="col">建议 kg</th>
+    <th scope="col">实做 kg</th><th scope="col">实做组数</th><th scope="col">实做次数<br>逐组可用 /</th><th scope="col">末组 RPE</th><th scope="col">动作判定</th></tr></thead>
+    <tbody role="rowgroup">${day.rows.map((row) => rowCells(row, day, mode)).join("")}</tbody></table></div>
+    <details class="session-log" id="notes-${day.id}"><summary>恢复与训练备注</summary>
+    <div class="inline">${noteFields.map(([field, label, min, max, step]) =>
+      `<label>${label}${numField(day.id, field, label, {value: variables[field], scope: "daily", min, max, step})}</label>`).join("")}
+      <span class="muted">疲劳 0 无，1 轻，2 明显，3 影响动作</span></div>
+    <label for="note-${day.id}">首组 RPE、逐组变重或动作备注</label>
+    <textarea id="note-${day.id}" data-scope="daily" data-key="${day.id}" data-field="note" rows="2">${html(variables.note)}</textarea></details></section>`;
+}
+
+function renderWeeks() {
+  const selectedDay = document.querySelector(".day.selected")?.id;
+  const openNotes = new Set(Array.from(document.querySelectorAll(".session-log[open]"), (note) => note.id));
+  element("weeks").innerHTML = program.weeks.map((week, idx) => {
+    const index = idx + 1;
+    const days = program.sessions.filter((day) => day.week === index);
+    if (!days.length) return "";
+    return `<article class="week" id="w${index}">
+        <div class="week-head"><h2><span>W${index}</span>${html(week.title)}</h2>
+        <p class="week-copy">${dateText(days[0].date)}–${dateText(days.at(-1).date)} · ${html(week.copy)}</p></div>
+        ${week.pivot ? `<div class="pivot-control"><label>本周执行
+        ${selector(String(index), "mode", "W" + index + "执行方式", state.modes[index], [["", "按表发展"], ["pivot", "切换过渡周"]], "mode")}</label>
+        <span class="muted"> 仅在本周开始前选择。已填写的实做记录会保留。</span></div>` : ""}
+        ${days.map(sessionCard).join("")}</article>`;
+  }).join("");
+  if (selectedDay) element(selectedDay)?.classList.add("selected");
+  for (const id of openNotes) {
+    if (element(id)) element(id).open = true;
+  }
+}
+
+function displayWeight(row, day, output) {
+  const gate = gateStatus(row.gate, program, state);
+  if (row.gate) {
+    let label = {open: "可尝试", waiting: "待确认前置组", closed: "前置组未达标"}[gate];
+    let className = gate === "open" ? "ok" : gate === "closed" ? "closed" : "";
+    if (row.result) {
+      const log = state.records[day.id + "-" + row.id];
+      const done = previousDone(row, log, row.cap, row.fixed, row.fixed);
+      if (done !== null) {
+        label = done ? "验收达成" : "验收未达成";
+        className = done ? "ok" : "closed";
+      }
+    }
+    return `<output class="test-load">${output.weight}</output><span class="gate ${className}">${label}</span>`;
+  }
+  if (output.weight == null) return `<span class="muted">${html(output.source)}</span>`;
+  const lower = row.floorGuide ? " · 参考下沿 " + format(Math.max(15, output.weight - 2.5)) : "";
+  return `<output class="weight${output.reduced ? " is-reduced" : ""}">${format(output.weight)}</output><span class="load-note">${html(output.source + lower)}</span>`;
+}
+
+function updateSuggestions() {
+  for (const day of program.sessions) {
+    for (const family of STRENGTH_KEYS) {
+      const output = element("basis-" + day.id + "-" + family);
+      if (!output) continue;
+      const reference = referenceFor(day, family, program, state);
+      output.textContent = reference.custom ? "采用当日输入" : "参考 " + format(reference.weight) + " kg";
+    }
+    const mode = state.modes[day.week];
+    for (const original of day.rows) {
+      const row = mode === "pivot" ? getPivotRow(original) : original;
+      const id = day.id + "-" + row.id;
+      const tile = element("load-" + id);
+      tile.innerHTML = displayWeight(row, day, loadSuggestion(row, day, program, state));
+      const rpe = state.records[id]?.last;
+      const above = row.cap != null && finite(rpe) && Number(rpe) > row.cap;
+      element("row-" + id).cells[7].classList.toggle("over", above);
+    }
+  }
+}
+
+function updateOverview() {
+  const summaries = program.weeks.map((week, idx) => {
+    const weekNo = idx + 1;
+    const mode = state.modes[weekNo];
+    const counts = {b: 0, s: 0, d: 0, sldl: 0, conditional: 0};
+    const recorded = {};
+    for (const day of program.sessions.filter((item) => item.week === weekNo)) {
+      const dayCounts = plannedReps(day, mode);
+      for (const key of Object.keys(dayCounts)) counts[key] += dayCounts[key];
+      if (mode === "pivot") continue;
+      for (const row of day.rows.filter((item) => item.anchor)) {
+        const result = observedEstimate(row, state.records[day.id + "-" + row.id] ?? {});
+        if (result) recorded[row.family] = `${format(result.weight)} @${format(result.rpe)} · ${Math.round(result.estimate)}`;
+      }
+    }
+    return `<tr role="row"><th scope="row" role="rowheader">W${weekNo} · ${html(mode === "pivot" ? "过渡" : week.title)}</th>
+    <td role="cell" data-label="卧推次数">${counts.b}</td>
+    <td role="cell" data-label="深蹲次数">${counts.s}</td>
+    <td role="cell" data-label="硬拉次数">${counts.d}</td>
+    <td role="cell" data-label="直腿硬拉">${counts.sldl}</td>
+    <td role="cell" data-label="条件试举">${counts.conditional || "—"}</td>
+    ${STRENGTH_KEYS.map((key) => `<td role="cell" data-label="${FAMILY[key]}观测">${recorded[key] ?? "—"}</td>`).join("")}</tr>`;
+  }).join("");
+  element("overview").innerHTML = `<table class="overview-table" role="table"><thead role="rowgroup"><tr role="row"><th scope="col">训练周</th>
+    <th scope="col">卧推次数</th><th scope="col">深蹲次数</th><th scope="col">硬拉次数</th><th scope="col">直腿硬拉</th>
+    <th scope="col">条件试举</th><th scope="col">T&amp;G 观测</th><th scope="col">深蹲观测</th><th scope="col">硬拉观测</th></tr>
+    </thead><tbody role="rowgroup">${summaries}</tbody></table>`;
+}
+
+function locateSession(date, scroll = true) {
+  document.querySelector(".day.selected")?.classList.remove("selected");
+  document.querySelector(".week-nav [aria-current]")?.removeAttribute("aria-current");
+  const day = program.sessions.find((item) => item.date >= date);
+  if (!day) return "本轮计划已结束";
+  const exact = day.date === date;
+  const section = element(day.id);
+  section.classList.add("selected");
+  document.querySelector(`.week-nav a[href="#w${day.week}"]`)?.setAttribute("aria-current", "true");
+  if (scroll) {
+    section.focus({preventScroll: true});
+    section.scrollIntoView({behavior: "auto", block: "start"});
+  }
+  if (exact) return "已定位当天训练";
+  return date < program.sessions[0].date ? "首练 " + day.date : "今日休息，下次训练 " + day.date;
+}
+
+async function getNetworkDate() {
+  try {
+    const url = new URL("https://timeapi.io/api/time/current/zone");
+    url.searchParams.set("timeZone", "Asia/Shanghai");
+    const response = await fetch(url, {cache: "no-store", signal: AbortSignal.timeout(2200)});
+    if (response.ok) {
+      const {dateTime} = await response.json();
+      const date = typeof dateTime === "string" ? dateTime.slice(0, 10) : "";
+      if (/^\d{4}-\d{2}-\d{2}$/.test(date) && Number.isFinite(Date.parse(date))) return date;
+    }
+  } catch (_) {
+    // The file also works when offline or when the time service is unavailable.
+  }
+  if (!["https:", "http:"].includes(location.protocol)) return null;
+  try {
+    const url = new URL(location.href);
+    url.hash = "";
+    url.searchParams.set("clock", Math.random().toString(36).slice(2));
+    const response = await fetch(url, {method: "HEAD", cache: "no-store", signal: AbortSignal.timeout(1800)});
+    const timestamp = Date.parse(response.headers.get("Date") ?? "");
+    const age = Number(response.headers.get("Age")) || 0;
+    return response.ok && Number.isFinite(timestamp)
+      ? domDate(new Date(timestamp + Math.max(0, age) * 1000)) : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+let checkedDate = "";
+let checkingDate = false;
+
+async function locateToday({forceScroll = false, respectAnchor = false} = {}) {
+  if (checkingDate) return;
+  checkingDate = true;
+  try {
+    const serverDate = await getNetworkDate();
+    const date = serverDate ?? domDate(new Date());
+    const scroll = forceScroll || date !== checkedDate && !(respectAnchor && location.hash);
+    const result = locateSession(date, scroll);
+    element("date-status").textContent = `${date} 北京时间 · ${result}${serverDate ? " · 联网" : " · 设备时间"}`;
+    element("today").hidden = !program.sessions.some((day) => day.date >= date);
+    checkedDate = date;
+  } finally {
+    checkingDate = false;
+  }
+}
+
+function downloadCopy() {
+  const root = document.documentElement.cloneNode(true);
+  root.querySelector("#saved-records").textContent = JSON.stringify({...state, savedAt: Date.now()}).replace(/</g, "\\u003c");
+  for (const id of ["weeks", "overview", "week-nav", "status"]) root.querySelector("#" + id).replaceChildren();
+  root.querySelector("#date-status").textContent = "正在获取日期…";
+  root.querySelector("#today").hidden = true;
+  const file = new Blob(["<!DOCTYPE html>\n" + root.outerHTML], {type: "text/html;charset=utf-8"});
+  const url = URL.createObjectURL(file);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = program.filename.replace(".html", "-with-log.html");
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+  report("已生成含当前记录的副本。");
+}
+
+element("main-title").textContent = program.title;
+element("period").textContent = program.sessions[0].date + " 至 " + program.sessions.at(-1).date
+  + " · 周二／周四／周六训练 · 周日休息";
+element("goals").innerHTML = STRENGTH_KEYS.map((key) =>
+  `<div class="goal"><dt>${html(FAMILY[key])}</dt><dd>${program.baselines[key]}
+    <span aria-label="提升至">→</span><strong>${program.targets[key]}</strong><span class="unit">kg</span></dd></div>`
+).join("");
+element("rules").innerHTML = program.rules;
+element("evidence").innerHTML = program.evidence;
+element("trend-note").textContent = program.trendNote;
+element("week-nav").innerHTML = program.weeks.map((_, index) =>
+  `<a class="button" href="#w${index + 1}">W${index + 1}</a>`).join("");
+element("today").addEventListener("click", () => { void locateToday({forceScroll: true}); });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") void locateToday();
+});
+element("save-file").addEventListener("click", downloadCopy);
+element("weeks").addEventListener("input", (event) => {
+  const field = event.target;
+  const {scope, key, field: name} = field.dataset;
+  if (!scope || field.validity?.valid === false) return;
+  if (scope === "mode") {
+    const weekDays = program.sessions.filter((day) => day.week === Number(key));
+    const hasLog = weekDays.some((day) => day.rows.some((row) =>
+      Object.values(state.records[day.id + "-" + row.id] ?? {}).some((value) => value !== "")));
+    if (hasLog) {
+      field.value = state.modes[key] ?? "";
+      report("本周已有实做记录。训练表保留当时选定的处方。", true);
+      return;
+    }
+    state.modes[key] = field.value;
+    renderWeeks();
+    document.querySelector(`[data-scope="mode"][data-key="${key}"]`)?.focus();
+  } else {
+    const map = scope === "record" ? state.records : state.daily;
+    (map[key] ??= {})[name] = field.value;
+  }
+  save();
+  if (scope !== "daily" || STRENGTH_KEYS.includes(name)) {
+    updateSuggestions();
+    updateOverview();
+  }
+});
+renderWeeks();
+updateSuggestions();
+updateOverview();
+if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+void locateToday({respectAnchor: true});
+</script>
+</body>
+</html>
