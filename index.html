@@ -101,15 +101,77 @@ tbody tr:nth-child(even) > * { background: #fafafb; }
 .trend th:first-child { width: 12%; }
 .data-note { padding: 6px 12px; color: var(--muted); font-size: 13px; }
 footer { color: var(--muted); padding-top: 4px; padding-bottom: 16px; font-size: 13px; }
-@media (max-width: 660px) {
+@media screen and (max-width: 900px) {
+  .table-scroll { overflow: visible; }
+  .plan-table, .overview-table, .plan-table tbody, .overview-table tbody {
+    display: block;
+    min-width: 0;
+  }
+  .plan-table colgroup { display: none; }
+  .plan-table thead, .overview-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .plan-table tbody tr, .overview-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    border-bottom: 1px solid var(--grid);
+  }
+  .plan-table tbody th, .overview-table tbody th {
+    grid-column: 1 / -1;
+    min-width: 0;
+    width: auto;
+    border: 0;
+    padding: 7px 10px;
+    background: var(--wash);
+    overflow-wrap: anywhere;
+  }
+  .plan-table tbody td, .overview-table tbody td {
+    min-width: 0;
+    border: 0;
+    padding: 5px 7px 6px;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .plan-table td[data-label]::before, .overview-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  .plan-table td:nth-child(n+2):nth-child(-n+4),
+  .overview-table td:nth-child(n+6) { grid-column: span 4; }
+  .plan-table td:nth-child(n+5):nth-child(-n+8),
+  .overview-table td:nth-child(n+2):nth-child(-n+5) { grid-column: span 3; }
+  .plan-table td:nth-child(n+5):nth-child(-n+8) { border-top: 1px solid var(--grid); }
+  .plan-table :is(input, select) {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 3px 4px;
+  }
+  .plan-table td.assessment {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 0;
+  }
+  .plan-table .assessment select { width: auto; min-width: 82px; }
+  .plan-table td.assessment-empty { display: none; }
+  .details-body { overflow-wrap: anywhere; }
+}
+@media screen and (max-width: 660px) {
   body { font-size: 13px; }
   header, main, footer { padding-inline: 10px; }
   .toolbar { padding: 8px; }
-  .plan-table { min-width: 725px; }
-  .plan-table td, .plan-table th { padding: 5px 4px; }
-  .plan-table .exercise { width: 23%; }
-  .plan-table .load { width: 15%; }
-  .plan-table tbody th:first-child, .plan-table thead th:first-child { position: sticky; left: 0; background: #f2f3f5; z-index: 1; }
+  .day :is(input, select, textarea) { font-size: 16px; }
 }
 @media print {
   body { background: white; font-size: 10px; }
@@ -409,13 +471,15 @@ function rowCells(original, day, mode) {
   const logField = (field, label, min, max, step) =>
     numField(id, field, name + " " + label, {value: log[field], min, max, step});
   const displayStatus = !row.sets ? "休息" : `${row.sets} × ${repsLabel}${optional ? "（可选）" : ""}`;
-  return `<tr id="row-${id}"><th scope="row">${html(name)}${row.note ? `<span class="exercise-note">${html(row.note)}</span>` : ""}</th>
-    <td>${displayStatus}</td><td>${html(intensity)}</td><td id="load-${id}"></td>
-    <td>${logField("kg", "实际 kg", 0, 650)}</td>
-    <td>${logField("sets", "实做组数", 0, 20, 1)}</td>
-    <td><input type="text" aria-label="${html(name)} 每组实做次数" data-scope="record" data-key="${id}" data-field="reps" value="${html(log.reps)}" inputmode="text" autocomplete="off"></td>
-    <td>${logField("last", "实际末组 RPE", 1, 10, 0.5)}</td>
-    <td>${assessment ? selector(id, "form", name + " 动作判定", log.form,
+  return `<tr id="row-${id}" role="row"><th scope="row" role="rowheader">${html(name)}${row.note ? `<span class="exercise-note">${html(row.note)}</span>` : ""}</th>
+    <td role="cell" data-label="组×次">${displayStatus}</td>
+    <td role="cell" data-label="目标 / 上限">${html(intensity)}</td>
+    <td role="cell" id="load-${id}" data-label="建议 kg"></td>
+    <td role="cell" data-label="实做 kg">${logField("kg", "实际 kg", 0, 650)}</td>
+    <td role="cell" data-label="实做组数">${logField("sets", "实做组数", 0, 20, 1)}</td>
+    <td role="cell" data-label="实做次数"><input type="text" aria-label="${html(name)} 每组实做次数" data-scope="record" data-key="${id}" data-field="reps" value="${html(log.reps)}" inputmode="text" autocomplete="off"></td>
+    <td role="cell" data-label="末组 RPE">${logField("last", "实际末组 RPE", 1, 10, 0.5)}</td>
+    <td role="cell" class="${assessment ? "assessment" : "assessment-empty"}" data-label="动作判定">${assessment ? selector(id, "form", name + " 动作判定", log.form,
       [["", "待记"], ["ok", "合格"], ["bad", "未达标"]]) : "—"}</td></tr>`;
 }
 
@@ -435,11 +499,11 @@ function sessionCard(day) {
     <div class="day-heading"><time class="date" datetime="${day.date}">${dateText(day.date)} · ${html(day.dayLabel)}</time><h3 id="${day.id}-title">${html(day.title)}</h3>
     <p class="session-copy">${html(mode === "pivot" ? day.pivotCopy ?? day.copy : day.copy)}</p>
     ${perDayInput && !day.archived ? `<div class="basis">${perDayInput}</div>` : ""}</div>
-    <div class="table-scroll"><table class="plan-table" aria-label="${html(day.title)}训练明细">
+    <div class="table-scroll"><table class="plan-table" role="table" aria-label="${html(day.title)}训练明细">
     <colgroup><col class="exercise"><col class="scheme"><col class="intensity"><col class="load"><col class="record"><col class="record"><col class="record"><col class="record"><col class="record"></colgroup>
-    <thead><tr><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">目标 / 上限</th><th scope="col">建议 kg</th>
+    <thead role="rowgroup"><tr role="row"><th scope="col">动作</th><th scope="col">组×次</th><th scope="col">目标 / 上限</th><th scope="col">建议 kg</th>
     <th scope="col">实做 kg</th><th scope="col">实做组数</th><th scope="col">实做次数<br>逐组可用 /</th><th scope="col">末组 RPE</th><th scope="col">动作判定</th></tr></thead>
-    <tbody>${day.rows.map((row) => rowCells(row, day, mode)).join("")}</tbody></table></div>
+    <tbody role="rowgroup">${day.rows.map((row) => rowCells(row, day, mode)).join("")}</tbody></table></div>
     <details class="session-log" id="notes-${day.id}"><summary>恢复与训练备注</summary>
     <div class="inline">${noteFields.map(([field, label, min, max, step]) =>
       `<label>${label}${numField(day.id, field, label, {value: variables[field], scope: "daily", min, max, step})}</label>`).join("")}
@@ -529,14 +593,17 @@ function updateOverview() {
         if (result) recorded[row.family] = `${format(result.weight)} @${format(result.rpe)} · ${Math.round(result.estimate)}`;
       }
     }
-    return `<tr><th scope="row">W${weekNo} · ${html(mode === "pivot" ? "过渡" : week.title)}</th>
-    <td>${counts.b}</td><td>${counts.s}</td><td>${counts.d}</td><td>${counts.conditional || "—"}</td>
-    ${STRENGTH_KEYS.map((key) => `<td>${recorded[key] ?? "—"}</td>`).join("")}</tr>`;
+    return `<tr role="row"><th scope="row" role="rowheader">W${weekNo} · ${html(mode === "pivot" ? "过渡" : week.title)}</th>
+    <td role="cell" data-label="卧推次数">${counts.b}</td>
+    <td role="cell" data-label="深蹲次数">${counts.s}</td>
+    <td role="cell" data-label="硬拉次数">${counts.d}</td>
+    <td role="cell" data-label="条件试举">${counts.conditional || "—"}</td>
+    ${STRENGTH_KEYS.map((key) => `<td role="cell" data-label="${FAMILY[key]}观测">${recorded[key] ?? "—"}</td>`).join("")}</tr>`;
   }).join("");
-  element("overview").innerHTML = `<table class="overview-table"><thead><tr><th scope="col">训练周</th>
+  element("overview").innerHTML = `<table class="overview-table" role="table"><thead role="rowgroup"><tr role="row"><th scope="col">训练周</th>
     <th scope="col">卧推次数</th><th scope="col">深蹲次数</th><th scope="col">硬拉次数</th>
     <th scope="col">条件试举</th><th scope="col">赛推观测</th><th scope="col">深蹲观测</th><th scope="col">硬拉观测</th></tr>
-    </thead><tbody>${summaries}</tbody></table>`;
+    </thead><tbody role="rowgroup">${summaries}</tbody></table>`;
 }
 
 function locateSession(date, scroll = true) {
